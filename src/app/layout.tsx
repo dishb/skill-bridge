@@ -14,9 +14,6 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <meta name="apple-mobile-web-app-title" content="asss" />
-      </head>
       <body className="min-h-screen">
         <ThemeProvider
           attribute="class"

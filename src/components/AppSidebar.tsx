@@ -5,6 +5,7 @@ import {
   Bolt,
   LogOut,
   Goal,
+  Store,
 } from "lucide-react";
 import {
   Sidebar,
@@ -22,7 +23,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import type SidebarItem from "@/types/sidebarItem";
 import Link from "next/link";
-import { Link as LinkIcon } from "lucide-react";
 
 const platformItems: SidebarItem[] = [
   {
@@ -60,11 +60,10 @@ export default function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <Link href="/" className="flex items-center gap-2">
-          <LinkIcon className="w-5 h-auto" />
+          <Store className="w-5 h-auto" />
           <h2 className="font-bold text-lg">SkillBridge</h2>
         </Link>
       </SidebarHeader>
-
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -83,7 +82,6 @@ export default function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
         <SidebarGroup>
           <SidebarGroupLabel>Account</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -108,21 +106,18 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-
       <SidebarFooter>
         <div className="flex items-center gap-2 p-4">
-          <Avatar className="w-10 h-10 border-1 border-input shadow-xs">
+          <Avatar className="w-10 h-10 border border-input shadow-xs">
             <AvatarImage src="/avatar.png" alt="User profile picture" />
             <AvatarFallback>JD</AvatarFallback>
           </Avatar>
-
-          <div>
+          <div className="flex flex-col">
             <p className="text-sm font-bold">John Doe</p>
             <p className="text-sm">john.doe@example.com</p>
           </div>
         </div>
       </SidebarFooter>
-
       <SidebarRail />
     </Sidebar>
   );
