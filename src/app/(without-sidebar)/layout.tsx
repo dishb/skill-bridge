@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ThemeProvider from "@/components/ThemeProvider";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -12,9 +13,19 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="asss" />
+      </head>
       <body className="min-h-screen">
-        <main>{children}</main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
