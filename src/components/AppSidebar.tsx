@@ -19,7 +19,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "./ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import type SidebarItem from "@/types/sidebarItem";
 import Link from "next/link";
 import { Link as LinkIcon } from "lucide-react";
@@ -52,11 +52,6 @@ const accountItems: SidebarItem[] = [
     title: "Settings",
     url: "/settings",
     icon: Bolt,
-  },
-  {
-    title: "Logout",
-    url: "/logout",
-    icon: LogOut,
   },
 ];
 
@@ -103,6 +98,12 @@ export default function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-destructive hover:cursor-pointer hover:bg-destructive/10 hover:text-destructive active:text-destructive active:bg-destructive/10">
+                  <LogOut />
+                  Log out
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

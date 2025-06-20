@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
-export const description = "A radial chart with text";
+export const description =
+  "A radial chart showing progress towards the user's goal.";
 
 const chartData = [{ hours: 200, fill: "var(--foreground)" }];
-
 const chartConfig = {
   hours: {
     label: "Hours",
@@ -30,10 +30,12 @@ const chartConfig = {
 
 export default function GoalProgress() {
   return (
-    <Card className="flex flex-col w-[50%]">
-      <CardHeader className="items-center pb-0">
+    <Card>
+      <CardHeader>
         <CardTitle className="text-3xl">Goal progress</CardTitle>
-        <CardDescription className="text-lg">XX% complete.</CardDescription>
+        <CardDescription className="text-lg">
+          Your goal for XX hours was set on XX/XX/XXXX.
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -71,14 +73,14 @@ export default function GoalProgress() {
                           y={viewBox.cy}
                           className="fill-foreground text-4xl font-bold"
                         >
-                          {chartData[0].hours.toLocaleString()}
+                          XX%
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Hours
+                          complete
                         </tspan>
                       </text>
                     );
@@ -89,6 +91,14 @@ export default function GoalProgress() {
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter className="flex-col gap-2 text-sm">
+        <div className="flex items-center gap-2 text-lg leading-none font-medium">
+          XX of XX hours completed.
+        </div>
+        <div className="text-muted-foreground text-lg leading-none">
+          You&apos;re making good progress, keep it up!
+        </div>
+      </CardFooter>
     </Card>
   );
 }

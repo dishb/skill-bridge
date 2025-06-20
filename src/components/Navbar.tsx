@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <nav className="flex w-full mb-4 justify-between items-center">
       <div className="flex items-center gap-4">
-        <SidebarTrigger />
+        <SidebarTrigger className="hover:cursor-pointer" />
         <h2 className="text-2xl font-bold">{pageTitle}</h2>
       </div>
 
