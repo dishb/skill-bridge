@@ -13,17 +13,17 @@ import { Plus, Minus, Goal, Trash, Check } from "lucide-react";
 import { useState } from "react";
 import { deleteGoal, createGoal } from "@/app/actions/goal";
 import { toast } from "sonner";
+import GoalFormProps from "@/types/goalFormProps";
 
-export default function GoalForm() {
+export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
   const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [hasGoal, setHasGoal] = useState(false);
+  const [hasGoal, setHasGoal] = useState(hasActiveGoal);
 
   async function onClick() {
     if (!hasGoal && counter === 0) {
       return;
     }
-
     setLoading(true);
 
     let res = null;

@@ -5,7 +5,7 @@ import client from "@/lib/db";
 import { ObjectId } from "mongodb";
 import type Goal from "@/types/goal";
 
-export async function getActiveGoal() {
+export async function hasActiveGoal() {
   try {
     const session = await auth();
     if (!session || !session.user || !session.user.id) {
@@ -17,9 +17,9 @@ export async function getActiveGoal() {
     const result = (await goalCollection.findOne({
       userId: new ObjectId(session.user.id),
       status: { $ne: "completed" },
-    })) as Goal;
+    }));
 
-    return { ok: true, goal: result };
+    return { ok: true, hasActiveGoal: result !== null };
   } catch (err: any) {
     return { ok: false, error: err.message };
   }
