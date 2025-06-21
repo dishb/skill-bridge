@@ -9,18 +9,50 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { Plus, Minus, Goal, Trash } from "lucide-react";
+import { Plus, Minus, Goal, Trash, Check } from "lucide-react";
 import { useState } from "react";
+import { deleteGoal, createGoal } from "@/app/actions/goal";
+import { toast } from "sonner";
 
 export default function GoalForm() {
   const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasGoal, setHasGoal] = useState(false);
 
-  function onClick() {
+  async function onClick() {
+    if (!hasGoal && counter === 0) {
+      return;
+    }
+
     setLoading(true);
 
-    setHasGoal(true);
+    let res = null;
+    if (hasGoal) {
+      res = await deleteGoal();
+      if (res.ok) {
+        toast.success("Your goal was deleted.", {
+          description: "Create a new goal to start tracking progress!",
+        });
+      } else {
+        toast.error("500: Internal Server Error", {
+          description: res.error || "An error occurred deleting your goal.",
+        });
+      }
+    } else {
+      res = await createGoal(counter);
+      if (res.ok) {
+        toast.success("Your goal was created.", {
+          description: "Start volunteering to accomplish your goal!",
+        });
+      } else {
+        toast.error("500: Internal Server Error", {
+          description: res.error || "An error occurred creating your goal.",
+        });
+      }
+    }
+
+    setCounter(0);
+    setHasGoal(!hasGoal);
     setLoading(false);
   }
 
@@ -61,11 +93,9 @@ export default function GoalForm() {
           </>
         ) : (
           <div className="flex flex-col w-full h-full max-w-[80%] items-center justify-center gap-4">
-            <p className="text-center text-3xl">
-              You already set a goal to complete XX hours by XX/XX/XXX.
-            </p>
-            <p className="text-center text-muted-foreground">
-              Are you sure you want to start over?
+            <Check className="w-30 h-auto" />
+            <p className="text-center text-lg">
+              You already set a goal to complete XX hours on XX/XX/XXX.
             </p>
           </div>
         )}
@@ -83,6 +113,7 @@ export default function GoalForm() {
           ) : (
             <Button
               className="flex-1 hover:cursor-pointer"
+              onClick={onClick}
               disabled={loading}
               variant="destructive"
             >

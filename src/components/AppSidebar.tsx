@@ -23,6 +23,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import type SidebarItem from "@/types/sidebarItem";
 import Link from "next/link";
+import { signOut } from "@/auth";
 
 const platformItems: SidebarItem[] = [
   {
@@ -97,7 +98,13 @@ export default function AppSidebar() {
                 </SidebarMenuItem>
               ))}
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-destructive hover:cursor-pointer hover:bg-destructive/10 hover:text-destructive active:text-destructive active:bg-destructive/10">
+                <SidebarMenuButton
+                  onClick={async () => {
+                    "use server";
+                    await signOut({ redirectTo: "/" });
+                  }}
+                  className="text-destructive hover:cursor-pointer hover:bg-destructive/10 hover:text-destructive active:text-destructive active:bg-destructive/10"
+                >
                   <LogOut />
                   Log out
                 </SidebarMenuButton>

@@ -5,6 +5,7 @@ import AppSidebar from "@/components/AppSidebar";
 import { cookies } from "next/headers";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Skill Bridge",
@@ -35,6 +36,7 @@ export default async function RootLayout({
               <main>{children}</main>
             </div>
           </SidebarProvider>
+          <Toaster richColors closeButton />
         </ThemeProvider>
       </body>
     </html>

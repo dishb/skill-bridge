@@ -24,8 +24,7 @@ import {
 } from "@tanstack/react-table";
 import { Badge } from "./ui/badge";
 import { Check, X, Clock } from "lucide-react";
-
-const data: Goal[] = [];
+import { useState, useEffect } from "react";
 
 const columns: ColumnDef<Goal>[] = [
   {
@@ -33,14 +32,14 @@ const columns: ColumnDef<Goal>[] = [
     header: "Hours",
   },
   {
-    accessorKey: "Time left",
-    header: "Time left",
+    accessorKey: "timePassed",
+    header: "Time passed",
     cell: ({ row }) => {
-      const dueDate = new Date(row.original.dueDate);
+      const createdOn = new Date(row.original.createdOn);
       const now = new Date();
-      const timeLeft = dueDate.getTime() - now.getTime();
-      const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      return `${daysLeft} days`;
+      const timeLeft = now.getTime() - createdOn.getTime();
+      const daysPassed = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      return <>{`${daysPassed} days`}</>;
     },
   },
   {
@@ -92,28 +91,26 @@ const columns: ColumnDef<Goal>[] = [
       return <>{formattedDate}</>;
     },
   },
-  {
-    accessorKey: "dueDate",
-    header: "End date",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("dueDate"));
-      const formattedDate = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date);
-
-      return <>{formattedDate}</>;
-    },
-  },
 ];
 
 export default function GoalHistory() {
+  const [data, setData] = useState<Goal[]>([]);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  async function handleFetchGoals() {
+    const res = await fetch("/api/get-goals", { method: "GET" });
+    const goals = await res.json();
+    setData(goals);
+  }
+
+  useEffect(() => {
+    handleFetchGoals();
+  }, []);
 
   return (
     <Card className="col-span-2">

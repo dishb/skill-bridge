@@ -1,4 +1,5 @@
 import { Store } from "lucide-react";
+import LoginButton from "@/components/LoginButton";
 
 export default function Page() {
   return (
@@ -10,6 +11,7 @@ export default function Page() {
           Developed by Dishant Bhandula for the 2025 Congressional App
           Challenge.
         </h2>
+        <LoginButton />
       </div>
     </div>
   );
