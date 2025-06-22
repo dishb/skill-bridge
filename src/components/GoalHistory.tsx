@@ -110,6 +110,10 @@ export default function GoalHistory() {
 
   useEffect(() => {
     handleFetchGoals();
+
+    setInterval(() => {
+      handleFetchGoals();
+    }, 1000);
   }, []);
 
   return (

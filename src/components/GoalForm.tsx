@@ -9,16 +9,46 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { Plus, Minus, Goal, Trash, Check } from "lucide-react";
-import { useState } from "react";
+import { Plus, Minus, GoalIcon, Trash, CircleCheck } from "lucide-react";
+import { useState, useEffect } from "react";
 import { deleteGoal, createGoal } from "@/app/actions/goal";
 import { toast } from "sonner";
-import GoalFormProps from "@/types/goalFormProps";
+import type GoalFormProps from "@/types/goalFormProps";
+import type Goal from "@/types/goal";
 
 export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
   const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasGoal, setHasGoal] = useState(hasActiveGoal);
+  const [goalHours, setGoalHours] = useState(0);
+  const [goalDate, setGoalDate] = useState("N/A");
+
+  const dateFormatter = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  async function loadGoalProgress() {
+    const res = await fetch("/api/get-active", { method: "GET" });
+    const goal: Goal = await res.json();
+
+    setGoalHours(goal?.hours ?? 0);
+    console.log("createdOn", goal?.createdOn);
+    setGoalDate(
+      goal && goal?.createdOn
+        ? dateFormatter.format(new Date(goal?.createdOn))
+        : "N/A"
+    );
+  }
+
+  useEffect(() => {
+    loadGoalProgress();
+
+    setInterval(() => {
+      loadGoalProgress();
+    }, 1000);
+  }, []);
 
   async function onClick() {
     if (!hasGoal && counter === 0) {
@@ -93,9 +123,10 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
           </>
         ) : (
           <div className="flex flex-col w-full h-full max-w-[80%] items-center justify-center gap-4">
-            <Check className="w-30 h-auto" />
+            <CircleCheck className="w-30 h-auto" />
             <p className="text-center text-lg">
-              You already set a goal to complete XX hours on XX/XX/XXX.
+              You already set a goal on {goalDate} to complete {goalHours}{" "}
+              hours.
             </p>
           </div>
         )}
@@ -108,7 +139,7 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
               onClick={onClick}
               disabled={loading}
             >
-              <Goal /> Set goal
+              <GoalIcon /> Set goal
             </Button>
           ) : (
             <Button
