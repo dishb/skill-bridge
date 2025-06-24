@@ -44,12 +44,10 @@ export default function GoalProgress() {
   async function loadGoalProgress() {
     const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
     const goal: Goal = await activeGoalRes.json();
-
     const totalHoursRes = await getTotalHours();
 
     setTotalHours(totalHoursRes?.totalHours ?? 0);
     setGoalHours(goal?.hours ?? 0);
-    console.log("createdOn", goal?.createdOn);
     setGoalDate(
       goal && goal?.createdOn
         ? dateFormatter.format(new Date(goal?.createdOn))
@@ -134,7 +132,7 @@ export default function GoalProgress() {
           </ChartContainer>
         ) : (
           <div className="flex flex-col w-full h-full justify-center items-center gap-4">
-            <TriangleAlert className="w-30 h-auto" />
+            <TriangleAlert className="w-30 h-auto text-yellow-500 dark:text-yellow-600" />
             <p className="text-center text-lg">
               Set a goal to start tracking progress.
             </p>
@@ -147,7 +145,9 @@ export default function GoalProgress() {
             {totalHours} of {goalHours} hours completed.
           </div>
           <div className="text-center text-muted-foreground text-lg leading-none">
-            You&apos;re making good progress, keep it up!
+            {totalHours !== 0
+              ? "You're making good progress, keep it up!"
+              : "Complete volunteering tasks to earn hours."}
           </div>
         </CardFooter>
       ) : (

@@ -1,0 +1,14 @@
+import type { ObjectId } from "mongodb";
+
+export default interface Opportunity {
+  status: "completed" | "in-progress" | "not-started";
+  title: string;
+  description: string;
+  createdOn: Date;
+  createdBy: string;
+  isOnline: boolean;
+  estimatedTime: number;
+  acceptedBy?: ObjectId;
+  address?: string;
+  tags?: string[];
+}

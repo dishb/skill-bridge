@@ -100,17 +100,20 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
             <div className="flex justify-center items-center w-full max-w-[60%]">
               <Button
                 variant="outline"
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer rounded-full w-10 h-10"
                 onClick={() => setCounter(counter >= 1 ? counter - 1 : counter)}
                 disabled={loading}
               >
                 <Minus />
               </Button>
 
-              <p className="text-7xl font-bold mx-auto">{counter}</p>
+              <div className="flex flex-col mx-auto justify-center items-center">
+                <p className="text-7xl font-bold">{counter}</p>
+                <p className="uppercase text-muted-foreground">Hours</p>
+              </div>
 
               <Button
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer rounded-full w-10 h-10"
                 variant="outline"
                 onClick={() => setCounter(counter + 1)}
                 disabled={loading}
@@ -118,8 +121,6 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
                 <Plus />
               </Button>
             </div>
-
-            <p className="text-4xl text-muted-foreground font-bold">Hours</p>
           </>
         ) : (
           <div className="flex flex-col w-full h-full max-w-[80%] items-center justify-center gap-4">
