@@ -49,28 +49,19 @@ const columns: ColumnDef<Goal>[] = [
       const status: string = row.original.status;
       if (status === "completed") {
         return (
-          <Badge
-            variant="secondary"
-            className="text-white bg-green-500 dark:bg-green-600"
-          >
+          <Badge variant="outline" className="text-green-600 dark:text-green-500">
             <Check /> Completed
           </Badge>
         );
       } else if (status === "in-progress") {
         return (
-          <Badge
-            variant="secondary"
-            className="text-white bg-yellow-500 dark:bg-yellow-600"
-          >
+          <Badge variant="outline" className="text-yellow-600 dark:text-yellow-500">
             <Clock /> In progress
           </Badge>
         );
       } else if (status === "not-started") {
         return (
-          <Badge
-            variant="secondary"
-            className="text-white bg-red-500 dark:bg-red-600"
-          >
+          <Badge variant="outline" className="text-red-600 dark:text-red-500">
             <X /> Not started
           </Badge>
         );

@@ -17,8 +17,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Button } from "./ui/button";
+import ClaimButton from "./ClaimButton";
 
 export default function Opportunity({
+  _id,
   status,
   createdOn,
   createdBy,
@@ -68,8 +70,9 @@ export default function Opportunity({
           </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button className="hover:cursor-pointer">
+      <CardFooter className="grid grid-cols-2 gap-4 max-w-fit">
+        <ClaimButton id={_id} status={status} />
+        <Button variant="secondary" className="hover:cursor-pointer">
           Learn more <ArrowRight />
         </Button>
       </CardFooter>

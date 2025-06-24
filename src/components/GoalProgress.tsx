@@ -132,7 +132,7 @@ export default function GoalProgress() {
           </ChartContainer>
         ) : (
           <div className="flex flex-col w-full h-full justify-center items-center gap-4">
-            <TriangleAlert className="w-30 h-auto text-yellow-500 dark:text-yellow-600" />
+            <TriangleAlert className="w-30 h-auto text-muted-foreground" />
             <p className="text-center text-lg">
               Set a goal to start tracking progress.
             </p>

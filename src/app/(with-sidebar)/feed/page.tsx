@@ -1,6 +1,7 @@
 import Opportunity from "@/components/Opportunity";
 import ProgressBar from "@/components/ProgressBar";
 import { getOpportunities } from "@/app/actions/opportunity";
+import { ObjectId } from "mongodb";
 
 export default async function Page() {
   const result = await getOpportunities();
@@ -16,6 +17,7 @@ export default async function Page() {
         {opportunities.map((item, key) => (
           <Opportunity
             key={key}
+            _id={item._id.toString()}
             status={item.status}
             title={item.title}
             description={item.description}

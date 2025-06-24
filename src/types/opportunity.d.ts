@@ -1,6 +1,7 @@
 import type { ObjectId } from "mongodb";
 
 export default interface Opportunity {
+  _id?: string;
   status: "completed" | "in-progress" | "not-started";
   title: string;
   description: string;
