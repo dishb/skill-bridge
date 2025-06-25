@@ -1,7 +1,6 @@
 import Opportunity from "@/components/Opportunity";
 import ProgressBar from "@/components/ProgressBar";
 import { getOpportunities } from "@/app/actions/opportunity";
-import { ObjectId } from "mongodb";
 
 export default async function Page() {
   const result = await getOpportunities();
@@ -16,6 +15,8 @@ export default async function Page() {
       <div className="grid grid-cols-2 gap-4 auto-rows-fr">
         {opportunities.map((item, key) => (
           <Opportunity
+            contactEmail={item.contactEmail}
+            longDescription={item.longDescription}
             key={key}
             _id={item._id.toString()}
             status={item.status}

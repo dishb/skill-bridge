@@ -9,6 +9,8 @@ export default interface Opportunity {
   createdBy: string;
   isOnline: boolean;
   estimatedTime: number;
+  longDescription: string;
+  contactEmail: string;
   acceptedBy?: ObjectId;
   address?: string;
   tags?: string[];

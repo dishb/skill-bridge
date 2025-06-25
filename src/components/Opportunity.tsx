@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type Opportunity from "@/types/opportunity";
 import {
   Card,
@@ -7,6 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Badge } from "./ui/badge";
 import {
   Tag,
@@ -15,13 +28,16 @@ import {
   Calendar,
   BadgePlus,
   ArrowRight,
+  X,
+  MailQuestionMark,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import ClaimButton from "./ClaimButton";
+import Link from "next/link";
 
 export default function Opportunity({
   _id,
-  status,
+  status: initialStatus,
   createdOn,
   createdBy,
   description,
@@ -30,7 +46,11 @@ export default function Opportunity({
   estimatedTime,
   tags,
   address,
+  longDescription,
+  contactEmail,
 }: Opportunity) {
+  const [status, setStatus] = useState(initialStatus);
+
   const formatter = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "2-digit",
@@ -70,11 +90,44 @@ export default function Opportunity({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="grid grid-cols-2 gap-4 max-w-fit">
-        <ClaimButton id={_id} status={status} />
-        <Button variant="secondary" className="hover:cursor-pointer">
-          Learn more <ArrowRight />
-        </Button>
+      <CardFooter className="gap-4 grid grid-cols-2 max-w-fit">
+        <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="secondary" className="hover:cursor-pointer">
+              Learn more <ArrowRight />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription>
+                View the details for this volunteer opportunity to decide if
+                it&apos;s right for you!
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex flex-col gap-4">
+              <p>{longDescription}</p>
+              <p className="flex gap-2">
+                <MailQuestionMark /> {contactEmail}
+              </p>
+            </div>
+            <DialogFooter className="flex w-full justify-end">
+              <div className="grid grid-cols-2 max-w-fit gap-4">
+                <DialogClose asChild>
+                  <Button variant="outline" className="hover:cursor-pointer">
+                    Close <X />
+                  </Button>
+                </DialogClose>
+                <ClaimButton
+                  id={_id}
+                  status={status}
+                  onStatusChange={setStatus}
+                />
+              </div>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </Card>
   );

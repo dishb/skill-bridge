@@ -6,8 +6,12 @@ import { Button } from "./ui/button";
 import { Check, CheckCheck } from "lucide-react";
 import type ClaimButtonProps from "@/types/claimButtonProps";
 
-export default function ClaimButton({ id, status }: ClaimButtonProps) {
-  const [disabled, setDisabled] = useState(status !== "not-started");
+export default function ClaimButton({
+  id,
+  status,
+  onStatusChange,
+}: ClaimButtonProps) {
+  const disabled = status !== "not-started";
 
   return (
     <Button
@@ -15,7 +19,7 @@ export default function ClaimButton({ id, status }: ClaimButtonProps) {
       disabled={disabled}
       onClick={async () => {
         const res = await claim(id);
-        if (res.ok) setDisabled(true);
+        if (res.ok) onStatusChange("completed");
       }}
     >
       {disabled ? "Claimed" : "Claim"}
