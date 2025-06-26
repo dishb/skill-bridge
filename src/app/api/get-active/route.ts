@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import client from "@/lib/db";
 import { ObjectId } from "mongodb";
 import type Goal from "@/types/goal";
-import { getTotalHours } from "@/app/actions/hours";
+import { getHoursTowardsGoal } from "@/app/actions/hours";
 
 export async function GET() {
   try {
@@ -19,12 +19,12 @@ export async function GET() {
       status: { $ne: "completed" },
     })) as Goal | null;
 
-    const res = await getTotalHours();
+    const res = await getHoursTowardsGoal();
     if (!res.ok) {
       throw new Error(res.error);
     }
 
-    if (activeGoal && activeGoal.hours === res.totalHours) {
+    if (activeGoal && activeGoal.hours === res.hoursTowardsGoal) {
       await goalCollection.findOneAndUpdate(
         { _id: activeGoal._id },
         { $set: { status: "completed" } }

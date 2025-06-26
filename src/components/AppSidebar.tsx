@@ -6,6 +6,7 @@ import {
   LogOut,
   Goal,
   Store,
+  Medal,
 } from "lucide-react";
 import {
   Sidebar,
@@ -43,6 +44,14 @@ const platformItems: SidebarItem[] = [
   },
 ];
 
+const socialItems: SidebarItem[] = [
+  {
+    title: "Leaderboard",
+    url: "/leaderboard",
+    icon: Medal,
+  },
+];
+
 const accountItems: SidebarItem[] = [
   {
     title: "Profile",
@@ -71,6 +80,23 @@ export default function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {platformItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Social</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {socialItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>

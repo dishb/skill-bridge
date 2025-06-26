@@ -20,7 +20,7 @@ import { ChartConfig } from "./ui/chart";
 import { useEffect, useState } from "react";
 import Goal from "@/types/goal";
 import { TriangleAlert } from "lucide-react";
-import { initializeHours, getTotalHours } from "@/app/actions/hours";
+import { initializeHours, getHoursTowardsGoal } from "@/app/actions/hours";
 
 const chartConfig = {
   hours: {
@@ -44,9 +44,9 @@ export default function GoalProgress() {
   async function loadGoalProgress() {
     const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
     const goal: Goal = await activeGoalRes.json();
-    const totalHoursRes = await getTotalHours();
+    const totalHoursRes = await getHoursTowardsGoal();
 
-    setTotalHours(totalHoursRes?.totalHours ?? 0);
+    setTotalHours(totalHoursRes?.hoursTowardsGoal ?? 0);
     setGoalHours(goal?.hours ?? 0);
     setGoalDate(
       goal && goal?.createdOn
