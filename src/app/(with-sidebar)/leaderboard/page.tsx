@@ -15,7 +15,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
-import { getLeaders } from "@/app/actions/hours";
+import { getLeaders, initializeHours } from "@/app/actions/hours";
+import { Award } from "lucide-react";
 
 interface ColumnType {
   position: number;
@@ -27,6 +28,31 @@ const columns: ColumnDef<ColumnType>[] = [
   {
     accessorKey: "position",
     header: "Position",
+    cell: ({ row }) => {
+      const pos = row.original.position;
+
+      if (pos === 1) {
+        return (
+          <div className="flex items-center gap-2">
+            <Award className="text-yellow-600" /> {pos}
+          </div>
+        );
+      } else if (pos === 2) {
+        return (
+          <div className="flex items-center gap-2">
+            <Award className="text-gray-300" /> {pos}
+          </div>
+        );
+      } else if (pos === 3) {
+        return (
+          <div className="flex items-center gap-2">
+            <Award className="text-yellow-700" /> {pos}
+          </div>
+        );
+      }
+
+      return pos;
+    },
   },
   {
     accessorKey: "userName",
@@ -67,6 +93,7 @@ export default function GoalHistory() {
 
   useEffect(() => {
     handleFetchLeaders();
+    initializeHours();
 
     const interval = setInterval(() => {
       handleFetchLeaders();

@@ -6,7 +6,7 @@ import {
   LogOut,
   Goal,
   Store,
-  Medal,
+  Award,
 } from "lucide-react";
 import {
   Sidebar,
@@ -48,7 +48,7 @@ const socialItems: SidebarItem[] = [
   {
     title: "Leaderboard",
     url: "/leaderboard",
-    icon: Medal,
+    icon: Award,
   },
 ];
 
