@@ -33,7 +33,6 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import ClaimButton from "./ClaimButton";
-import Link from "next/link";
 
 export default function Opportunity({
   _id,
@@ -59,29 +58,27 @@ export default function Opportunity({
   const formattedCreatedOn = formatter.format(createdOn);
 
   return (
-    <Card className="flex flex-col">
+    <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="">{description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1">
+      <CardContent>
         <div className="h-full grid grid-cols-2 gap-4">
-          <p className="flex items-center gap-2">
+          <p className="flex gap-2">
             <Clock /> {estimatedTime} minutes
           </p>
-          <p className="flex items-center gap-2">
+          <p className="flex gap-2">
             <BadgePlus /> {createdBy}
           </p>
-          <p className="flex items-center gap-2">
+          <p className="flex gap-2">
             <Calendar /> {formattedCreatedOn}
           </p>
-          <p className="flex items-center gap-2">
-            <MapPin /> {isOnline ? "Online" : `In-person, ${address}`}
+          <p className="flex gap-2">
+            <MapPin /> {isOnline ? "Online" : address}
           </p>
           <div className="flex gap-2 col-span-2">
-            <p className="flex items-center gap-2">
-              <Tag />
-            </p>
+            <Tag />
             {tags?.map((item, key) => (
               <Badge key={key} variant="secondary">
                 {item}
@@ -90,44 +87,68 @@ export default function Opportunity({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="gap-4 grid grid-cols-2 max-w-fit">
-        <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="secondary" className="hover:cursor-pointer">
-              Learn more <ArrowRight />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
-              <DialogDescription>
-                View the details for this volunteer opportunity to decide if
-                it&apos;s right for you!
-              </DialogDescription>
-            </DialogHeader>
-            <div className="flex flex-col gap-4">
-              <p>{longDescription}</p>
-              <p className="flex gap-2">
-                <MailQuestionMark /> {contactEmail}
-              </p>
-            </div>
-            <DialogFooter className="flex w-full justify-end">
-              <div className="grid grid-cols-2 max-w-fit gap-4">
-                <DialogClose asChild>
-                  <Button variant="outline" className="hover:cursor-pointer">
-                    Close <X />
-                  </Button>
-                </DialogClose>
-                <ClaimButton
-                  id={_id}
-                  status={status}
-                  onStatusChange={setStatus}
-                />
+      <CardFooter className="mt-auto">
+        <div className="grid grid-cols-2 gap-4">
+          <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="secondary" className="hover:cursor-pointer">
+                Learn more <ArrowRight />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{title}</DialogTitle>
+                <DialogDescription>
+                  View the details for this volunteer opportunity to decide if
+                  it&apos;s right for you!
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col gap-4">
+                <p>{longDescription}</p>
+                <div className="h-full grid grid-cols-2 gap-4">
+                  <p className="flex items-center gap-2">
+                    <Clock /> {estimatedTime} minutes
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <BadgePlus /> {createdBy}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <Calendar /> {formattedCreatedOn}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <MapPin /> {isOnline ? "Online" : address}
+                  </p>
+                  <div className="flex gap-2 col-span-2">
+                    <Tag />
+                    {tags?.map((item, key) => (
+                      <Badge key={key} variant="secondary">
+                        {item}
+                      </Badge>
+                    ))}
+                  </div>
+                  <p className="flex gap-2 col-span-2">
+                    <MailQuestionMark /> {contactEmail}
+                  </p>
+                </div>
               </div>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              <DialogFooter className="flex w-full justify-end">
+                <div className="grid grid-cols-2 max-w-fit gap-4">
+                  <DialogClose asChild>
+                    <Button variant="outline" className="hover:cursor-pointer">
+                      Close <X />
+                    </Button>
+                  </DialogClose>
+                  <ClaimButton
+                    id={_id}
+                    status={status}
+                    onStatusChange={setStatus}
+                  />
+                </div>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </CardFooter>
     </Card>
   );

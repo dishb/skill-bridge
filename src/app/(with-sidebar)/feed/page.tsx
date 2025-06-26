@@ -12,7 +12,7 @@ export default async function Page() {
       <h2 className="font-bold text-3xl mt-8">
         Browse volunteer opportunities
       </h2>
-      <div className="grid grid-cols-2 gap-4 auto-rows-fr">
+      <div className="grid grid-cols-2 gap-4">
         {opportunities.map((item, key) => (
           <Opportunity
             contactEmail={item.contactEmail}
