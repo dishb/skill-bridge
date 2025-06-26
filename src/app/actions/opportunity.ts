@@ -19,7 +19,12 @@ export async function getOpportunities() {
       throw new Error("An error occurred finding volunteer opportunities.");
     }
 
-    return { ok: true, opportunities: result };
+    const opportunities = result.map((opportunity) => ({
+      ...opportunity,
+      _id: opportunity._id.toString(),
+    }));
+
+    return { ok: true, opportunities: opportunities };
   } catch (err: any) {
     return { ok: false, error: err.message };
   }

@@ -55,7 +55,7 @@ export default function Page() {
               contactEmail={item.contactEmail}
               longDescription={item.longDescription}
               key={key}
-              _id={item._id.toString()}
+              _id={item._id}
               status={item.status}
               title={item.title}
               description={item.description}
