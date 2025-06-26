@@ -19,7 +19,7 @@ import { ChartContainer } from "./ui/chart";
 import { ChartConfig } from "./ui/chart";
 import { useEffect, useState } from "react";
 import Goal from "@/types/goal";
-import { TriangleAlert } from "lucide-react";
+import { CircleAlert } from "lucide-react";
 import { initializeHours, getHoursTowardsGoal } from "@/app/actions/hours";
 
 const chartConfig = {
@@ -132,7 +132,7 @@ export default function GoalProgress() {
           </ChartContainer>
         ) : (
           <div className="flex flex-col w-full h-full justify-center items-center gap-4">
-            <TriangleAlert className="w-30 h-auto text-muted-foreground" />
+            <CircleAlert className="w-30 h-auto text-red-500" />
             <p className="text-center text-lg">
               Set a goal to start tracking progress.
             </p>

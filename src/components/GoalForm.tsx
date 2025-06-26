@@ -124,7 +124,7 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
           </>
         ) : (
           <div className="flex flex-col w-full h-full max-w-[80%] items-center justify-center gap-4">
-            <CircleCheck className="w-30 h-auto text-muted-foreground" />
+            <CircleCheck className="w-30 h-auto text-green-500" />
             <p className="text-center text-lg">
               You already set a goal on {goalDate} to complete {goalHours}{" "}
               hours.
@@ -147,7 +147,6 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
               className="flex-1 hover:cursor-pointer"
               onClick={onClick}
               disabled={loading}
-              variant="destructive"
             >
               <Trash /> Delete goal
             </Button>
