@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   });
   const mailOptions = {
     from: `"Skill Bridge" <${process.env.GMAIL_USER}>`,
-    to: "code.dishb@gmail.com",
+    to: process.env.RECIPIENT_EMAIL,
     subject: "Approve volunteer hours",
     html: `<a href="${magicLink}">Approve volunteer hours</a>`,
   };
