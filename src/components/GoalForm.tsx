@@ -47,7 +47,7 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
     setInterval(() => {
       loadGoalProgress();
     }, 1000);
-  }, []);
+  }, [loadGoalProgress]);
 
   async function onClick() {
     if (!hasGoal && counter === 0) {
