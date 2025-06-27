@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const { documentId } = await req.json();
   const website =
     process.env.NODE_ENV === "production"
-      ? "https://skill-bridge.vercel.app"
+      ? "https://skill-bridge-phi.vercel.app/"
       : "http://localhost:3000";
   const magicLink = `${website}/approve-hours/${documentId}`;
 
