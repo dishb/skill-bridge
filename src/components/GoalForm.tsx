@@ -29,25 +29,27 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
     day: "2-digit",
   });
 
-  async function loadGoalProgress() {
-    const res = await fetch("/api/get-active", { method: "GET" });
-    const goal: Goal = await res.json();
-
-    setGoalHours(goal?.hours ?? 0);
-    setGoalDate(
-      goal && goal?.createdOn
-        ? dateFormatter.format(new Date(goal?.createdOn))
-        : "N/A"
-    );
-  }
-
   useEffect(() => {
+    async function loadGoalProgress() {
+      const res = await fetch("/api/get-active", { method: "GET" });
+      const goal: Goal = await res.json();
+
+      setGoalHours(goal?.hours ?? 0);
+      setGoalDate(
+        goal && goal?.createdOn
+          ? dateFormatter.format(new Date(goal?.createdOn))
+          : "N/A"
+      );
+    }
+
     loadGoalProgress();
 
-    setInterval(() => {
+    const interval = setInterval(() => {
       loadGoalProgress();
     }, 1000);
-  }, [loadGoalProgress]);
+
+    return () => clearInterval(interval);
+  }, [dateFormatter]);
 
   async function onClick() {
     if (!hasGoal && counter === 0) {

@@ -6,8 +6,11 @@ interface Params {
   params: { id: string };
 }
 
-export async function POST(_: Request, { params }: Params) {
-  const { id } = await params;
+export async function POST(
+  request: Request,
+  params: { params: { id: string } }
+) {
+  const { id } = params.params;
 
   try {
     const companyDB = client.db("companydb");
