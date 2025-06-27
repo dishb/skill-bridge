@@ -47,8 +47,8 @@ export async function POST(
     if (activeGoal) {
       const updatedHours = (userHours.hoursTowardsGoal ?? 0) + estimatedTime;
 
-      let update: any = { status: "in-progress" };
-      let hoursTowardsGoalUpdate = { hoursTowardsGoal: updatedHours };
+      const update: any = { status: "in-progress" };
+      const hoursTowardsGoalUpdate = { hoursTowardsGoal: updatedHours };
 
       if (updatedHours >= activeGoal.hours) {
         update.status = "completed";
