@@ -2,11 +2,10 @@ import { NextResponse } from "next/server";
 import client from "@/lib/db";
 import { ObjectId } from "mongodb";
 
-interface Params {
-  params: { id: string };
-}
-
-export async function POST(_: Request, { params }: Params) {
+export async function POST(
+  _: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
 
   try {

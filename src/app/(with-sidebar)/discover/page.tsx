@@ -10,12 +10,10 @@ import { useState, useEffect } from "react";
 export default function Page() {
   const [search, setSearch] = useState("");
   const [opportunities, setOpportunities] = useState<any[]>([]);
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     getOpportunities().then((result) => {
       setOpportunities(result.opportunities ?? []);
-      setLoaded(true);
     });
   }, []);
 
@@ -49,24 +47,23 @@ export default function Page() {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        {loaded &&
-          filtered.map((item, key) => (
-            <Opportunity
-              contactEmail={item.contactEmail}
-              longDescription={item.longDescription}
-              key={key}
-              _id={item._id}
-              status={item.status}
-              title={item.title}
-              description={item.description}
-              dueDate={item.dueDate}
-              createdBy={item.createdBy}
-              isOnline={item.isOnline}
-              estimatedTime={item.estimatedTime}
-              tags={item.tags}
-              address={item.address}
-            />
-          ))}
+        {filtered.map((item, key) => (
+          <Opportunity
+            contactEmail={item.contactEmail}
+            longDescription={item.longDescription}
+            key={key}
+            _id={item._id}
+            status={item.status}
+            title={item.title}
+            description={item.description}
+            dueDate={item.dueDate}
+            createdBy={item.createdBy}
+            isOnline={item.isOnline}
+            estimatedTime={item.estimatedTime}
+            tags={item.tags}
+            address={item.address}
+          />
+        ))}
       </div>
     </div>
   );

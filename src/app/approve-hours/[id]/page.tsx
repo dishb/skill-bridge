@@ -3,11 +3,11 @@ import client from "@/lib/db";
 import { ObjectId } from "mongodb";
 import { Button } from "@/components/ui/button";
 
-type Props = {
-  params: { id: string };
-};
-
-export default async function Page({ params }: Props) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
   const db = client.db("companydb");
@@ -17,7 +17,7 @@ export default async function Page({ params }: Props) {
   try {
     data = await opportunitiesCollection.findOne({ _id: new ObjectId(id) });
     if (!data) return notFound();
-  } catch (err) {
+  } catch {
     return notFound();
   }
 

@@ -122,14 +122,14 @@ export default function Page() {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  async function loadClaimedOpportunities() {
-    const res = await getClaimedOpportunities();
-    if (res.ok) {
-      setData(res.opportunities ?? []);
-    }
-  }
-
   useEffect(() => {
+    async function loadClaimedOpportunities() {
+      const res = await getClaimedOpportunities();
+      if (res.ok) {
+        setData(res.opportunities ?? []);
+      }
+    }
+
     loadClaimedOpportunities();
 
     const interval = setInterval(() => {

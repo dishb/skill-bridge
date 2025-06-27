@@ -40,29 +40,32 @@ export default function GoalProgress() {
     day: "2-digit",
   });
   const chartData = [{ hours: hoursTowardsGoal, fill: "var(--foreground)" }];
-
-  async function loadGoalProgress() {
-    const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
-    const goal: Goal = await activeGoalRes.json();
-    const hoursTowardsGoalRes = await getHoursTowardsGoal();
-
-    setHoursTowardsGoal(hoursTowardsGoalRes?.hoursTowardsGoal ?? 0);
-    setGoalHours(goal?.hours ?? 0);
-    setGoalDate(
-      goal && goal?.createdOn
-        ? dateFormatter.format(new Date(goal?.createdOn))
-        : "N/A"
-    );
-  }
+  const percentage: number = hoursTowardsGoal / goalHours;
 
   useEffect(() => {
+    async function loadGoalProgress() {
+      const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
+      const goal: Goal = await activeGoalRes.json();
+      const hoursTowardsGoalRes = await getHoursTowardsGoal();
+
+      setHoursTowardsGoal(hoursTowardsGoalRes?.hoursTowardsGoal ?? 0);
+      setGoalHours(goal?.hours ?? 0);
+      setGoalDate(
+        goal && goal?.createdOn
+          ? dateFormatter.format(new Date(goal?.createdOn))
+          : "N/A"
+      );
+    }
+
     loadGoalProgress();
     initializeHours();
 
-    setInterval(() => {
+    const interval = setInterval(() => {
       loadGoalProgress();
     }, 1000);
-  }, []);
+
+    return () => clearInterval(interval);
+  },);
 
   return (
     <Card>
@@ -85,7 +88,7 @@ export default function GoalProgress() {
             <RadialBarChart
               data={chartData}
               startAngle={0}
-              endAngle={(360 * hoursTowardsGoal) / goalHours}
+              endAngle={percentage * 360}
               innerRadius={80}
               outerRadius={110}
             >
@@ -113,7 +116,7 @@ export default function GoalProgress() {
                             y={viewBox.cy}
                             className="fill-foreground text-4xl font-bold"
                           >
-                            {(hoursTowardsGoal / goalHours) * 100}%
+                            {(Number(percentage.toFixed(3)) * 100)}%
                           </tspan>
                           <tspan
                             x={viewBox.cx}
@@ -142,7 +145,7 @@ export default function GoalProgress() {
       {goalHours !== 0 ? (
         <CardFooter className="flex-col gap-2 text-sm">
           <div className="flex items-center gap-2 text-lg leading-none font-medium">
-            {hoursTowardsGoal} of {goalHours} hours completed.
+            {hoursTowardsGoal.toFixed(1)} of {goalHours} hours completed.
           </div>
           <div className="text-center text-muted-foreground text-lg leading-none">
             {hoursTowardsGoal !== 0

@@ -97,18 +97,20 @@ export default function GoalHistory() {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  async function handleFetchGoals() {
-    const res = await fetch("/api/get-goals", { method: "GET" });
-    const goals = await res.json();
-    setData(goals);
-  }
-
   useEffect(() => {
+    async function handleFetchGoals() {
+      const res = await fetch("/api/get-goals", { method: "GET" });
+      const goals = await res.json();
+      setData(goals);
+    }
+
     handleFetchGoals();
 
-    setInterval(() => {
+    const interval = setInterval(() => {
       handleFetchGoals();
     }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (

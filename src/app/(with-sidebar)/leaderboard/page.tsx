@@ -61,6 +61,9 @@ const columns: ColumnDef<Column>[] = [
   {
     accessorKey: "totalHours",
     header: "Hours",
+    cell: ({ row }) => {
+      return <>{row.original.totalHours.toFixed(1)}</>;
+    },
   },
 ];
 
@@ -73,19 +76,19 @@ export default function GoalHistory() {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  async function handleFetchLeaders() {
-    const res = await getLeaders();
-    if (res.ok && Array.isArray(res.leaders)) {
-      const leadersWithPosition = res.leaders.map((leader, index) => ({
-        position: index + 1,
-        userName: leader.userName,
-        totalHours: leader.totalHours,
-      }));
-      setData(leadersWithPosition);
-    }
-  }
-
   useEffect(() => {
+    async function handleFetchLeaders() {
+      const res = await getLeaders();
+      if (res.ok && Array.isArray(res.leaders)) {
+        const leadersWithPosition = res.leaders.map((leader, index) => ({
+          position: index + 1,
+          userName: leader.userName,
+          totalHours: leader.totalHours,
+        }));
+        setData(leadersWithPosition);
+      }
+    }
+
     handleFetchLeaders();
     initializeHours();
 

@@ -21,7 +21,7 @@ export async function getOpportunities() {
 
     const opportunities = result.map((opportunity) => ({
       ...opportunity,
-      _id: opportunity._id.toString()
+      _id: opportunity._id.toString(),
     }));
 
     return { ok: true, opportunities: opportunities };
@@ -103,7 +103,10 @@ export async function getClaimedOpportunities() {
     const db = client.db("companydb");
     const opportunitiesCollection = db.collection("opportunities");
     const result = await opportunitiesCollection
-      .find({ claimedBy: new ObjectId(session.user.id) })
+      .find({
+        claimedBy: new ObjectId(session.user.id),
+        status: { $ne: "completed" },
+      })
       .toArray();
 
     if (result === null) {

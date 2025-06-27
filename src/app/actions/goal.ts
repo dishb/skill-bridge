@@ -64,7 +64,7 @@ export async function createGoal(hours: number) {
 
     const db = client.db("customerdb");
     const goalCollection = db.collection("goals");
-    const result = await goalCollection.insertOne(goal);
+    await goalCollection.insertOne(goal);
 
     return { ok: true };
   } catch (err: any) {

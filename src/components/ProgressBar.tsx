@@ -16,16 +16,16 @@ export default function ProgressBar() {
   const [goalHours, setGoalHours] = useState(0);
   const [totalHours, setTotalHours] = useState(0);
 
-  async function loadGoalProgress() {
-    const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
-    const goal = (await activeGoalRes.json()) as Goal;
-    const totalHoursRes = await getHoursTowardsGoal();
-
-    setTotalHours(totalHoursRes?.hoursTowardsGoal ?? 0);
-    setGoalHours(goal?.hours ?? 0);
-  }
-
   useEffect(() => {
+    async function loadGoalProgress() {
+      const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
+      const goal = (await activeGoalRes.json()) as Goal;
+      const totalHoursRes = await getHoursTowardsGoal();
+
+      setTotalHours(totalHoursRes?.hoursTowardsGoal ?? 0);
+      setGoalHours(goal?.hours ?? 0);
+    }
+
     loadGoalProgress();
   }, []);
 
