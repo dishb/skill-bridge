@@ -29,6 +29,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { X, Send } from "lucide-react";
 import type Opportunity from "@/types/opportunity";
+import { toast } from "sonner";
 
 const columns: ColumnDef<Opportunity>[] = [
   {
@@ -83,13 +84,20 @@ const columns: ColumnDef<Opportunity>[] = [
           });
 
           const resJson = await res.json();
-          if (!resJson.ok) {
+          if (resJson.ok) {
+            toast.success("Sent approval request for volunteer hours.", {
+              description:
+                "You will recieve your hours once the organization approves them!",
+            });
+          } else {
             throw new Error(
               "An error occurred sending the volunteer hours approval request email."
             );
           }
         } catch (err: any) {
-          console.log("ERROR", err.message);
+          toast.error("500: Internal Server Error", {
+            description: err.message,
+          });
         }
       }
 

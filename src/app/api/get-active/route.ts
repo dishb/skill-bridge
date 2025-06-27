@@ -35,7 +35,6 @@ export async function GET() {
 
     return NextResponse.json(activeGoal, { status: 200 });
   } catch (err: any) {
-    console.log(err.message);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

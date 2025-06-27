@@ -36,7 +36,6 @@ const columns: ColumnDef<Goal>[] = [
     header: "Time passed",
     cell: ({ row }) => {
       const createdOn = new Date(row.original.createdOn);
-      console.log(row.original.completedOn);
       const completedOn = row.original.completedOn
         ? new Date(row.original.completedOn)
         : new Date();

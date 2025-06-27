@@ -88,7 +88,6 @@ export async function claimOpportunity(id: string | undefined) {
 
     return { ok: true };
   } catch (err: any) {
-    console.log(err.message);
     return { ok: false, error: err.message };
   }
 }

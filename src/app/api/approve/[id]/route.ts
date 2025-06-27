@@ -49,7 +49,6 @@ export async function POST(
 
     return NextResponse.json({ ok: true });
   } catch (err: any) {
-    console.log("ERROR", err.message);
     return NextResponse.json({ ok: false, error: err.message });
   }
 }
