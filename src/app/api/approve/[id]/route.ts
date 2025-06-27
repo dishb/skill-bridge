@@ -4,9 +4,9 @@ import { ObjectId } from "mongodb";
 
 export async function POST(
   _: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
-  const { id } = params;
+  const { id } = context.params;
 
   try {
     const companyDB = client.db("companydb");
