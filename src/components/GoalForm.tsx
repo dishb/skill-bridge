@@ -29,27 +29,24 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
     day: "2-digit",
   });
 
+  async function loadGoalProgress() {
+    const res = await fetch("/api/get-active", { method: "GET" });
+    const goal: Goal = await res.json();
+
+    setGoalHours(goal?.hours ?? 0);
+    setGoalDate(
+      goal && goal?.createdOn
+        ? dateFormatter.format(new Date(goal?.createdOn))
+        : "N/A"
+    );
+  }
+
   useEffect(() => {
-    async function loadGoalProgress() {
-      const res = await fetch("/api/get-active", { method: "GET" });
-      const goal: Goal = await res.json();
-
-      setGoalHours(goal?.hours ?? 0);
-      setGoalDate(
-        goal && goal?.createdOn
-          ? dateFormatter.format(new Date(goal?.createdOn))
-          : "N/A"
-      );
-    }
-
     loadGoalProgress();
 
-    const interval = setInterval(() => {
+    setInterval(() => {
       loadGoalProgress();
     }, 1000);
-
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function onClick() {

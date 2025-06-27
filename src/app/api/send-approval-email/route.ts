@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
-  const { documentId } = await req.json();
+  const { recipientEmail, documentId } = await req.json();
   const website =
     process.env.NODE_ENV === "production"
       ? "https://skill-bridge.vercel.app"

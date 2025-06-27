@@ -17,7 +17,7 @@ export default async function Page({ params }: Props) {
   try {
     data = await opportunitiesCollection.findOne({ _id: new ObjectId(id) });
     if (!data) return notFound();
-  } catch {
+  } catch (err) {
     return notFound();
   }
 

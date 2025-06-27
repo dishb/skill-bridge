@@ -41,30 +41,27 @@ export default function GoalProgress() {
   });
   const chartData = [{ hours: hoursTowardsGoal, fill: "var(--foreground)" }];
 
+  async function loadGoalProgress() {
+    const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
+    const goal: Goal = await activeGoalRes.json();
+    const hoursTowardsGoalRes = await getHoursTowardsGoal();
+
+    setHoursTowardsGoal(hoursTowardsGoalRes?.hoursTowardsGoal ?? 0);
+    setGoalHours(goal?.hours ?? 0);
+    setGoalDate(
+      goal && goal?.createdOn
+        ? dateFormatter.format(new Date(goal?.createdOn))
+        : "N/A"
+    );
+  }
+
   useEffect(() => {
-    async function loadGoalProgress() {
-      const activeGoalRes = await fetch("/api/get-active", { method: "GET" });
-      const goal: Goal = await activeGoalRes.json();
-      const hoursTowardsGoalRes = await getHoursTowardsGoal();
-
-      setHoursTowardsGoal(hoursTowardsGoalRes?.hoursTowardsGoal ?? 0);
-      setGoalHours(goal?.hours ?? 0);
-      setGoalDate(
-        goal && goal?.createdOn
-          ? dateFormatter.format(new Date(goal?.createdOn))
-          : "N/A"
-      );
-    }
-
     loadGoalProgress();
     initializeHours();
 
-    const interval = setInterval(() => {
+    setInterval(() => {
       loadGoalProgress();
     }, 1000);
-
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

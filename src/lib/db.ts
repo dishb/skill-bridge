@@ -16,7 +16,7 @@ const options = {
 let client: MongoClient;
 
 if (process.env.NODE_ENV === "development") {
-  const globalWithMongo = global as typeof globalThis & {
+  let globalWithMongo = global as typeof globalThis & {
     _mongoClient?: MongoClient;
   };
 
