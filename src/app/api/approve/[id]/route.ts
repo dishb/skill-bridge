@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import client from "@/lib/db";
 import { ObjectId } from "mongodb";
 
 export async function POST(
-  _: Request,
-  params: { params: { id: string } }
+  _: NextRequest,
+  { params }: { params: { id: string } }
 ) {
-  const { id } = params.params;
+  const { id } = params;
 
   try {
     const companyDB = client.db("companydb");

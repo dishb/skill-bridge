@@ -49,6 +49,7 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
     }, 1000);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function onClick() {
