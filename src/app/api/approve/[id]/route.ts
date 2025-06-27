@@ -2,12 +2,8 @@ import { NextResponse } from "next/server";
 import client from "@/lib/db";
 import { ObjectId } from "mongodb";
 
-interface Params {
-  params: { id: string };
-}
-
 export async function POST(
-  request: Request,
+  _: Request,
   params: { params: { id: string } }
 ) {
   const { id } = params.params;

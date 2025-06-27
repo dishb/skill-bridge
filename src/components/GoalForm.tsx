@@ -49,7 +49,7 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [dateFormatter]);
+  }, []);
 
   async function onClick() {
     if (!hasGoal && counter === 0) {

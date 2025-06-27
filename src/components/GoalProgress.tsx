@@ -64,7 +64,7 @@ export default function GoalProgress() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [dateFormatter]);
+  }, []);
 
   return (
     <Card>
