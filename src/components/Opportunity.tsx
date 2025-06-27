@@ -37,7 +37,7 @@ import ClaimButton from "./ClaimButton";
 export default function Opportunity({
   _id,
   status: initialStatus,
-  createdOn,
+  dueDate,
   createdBy,
   description,
   title,
@@ -55,7 +55,7 @@ export default function Opportunity({
     month: "2-digit",
     day: "2-digit",
   });
-  const formattedCreatedOn = formatter.format(createdOn);
+  const formattedDueDate = formatter.format(dueDate);
 
   return (
     <Card>
@@ -72,7 +72,7 @@ export default function Opportunity({
             <BadgePlus /> {createdBy}
           </p>
           <p className="flex gap-2">
-            <Calendar /> {formattedCreatedOn}
+            <Calendar /> {formattedDueDate}
           </p>
           <p className="flex gap-2">
             <MapPin /> {isOnline ? "Online" : address}
@@ -114,7 +114,7 @@ export default function Opportunity({
                     <BadgePlus /> {createdBy}
                   </p>
                   <p className="flex items-center gap-2">
-                    <Calendar /> {formattedCreatedOn}
+                    <Calendar /> {formattedDueDate}
                   </p>
                   <p className="flex items-center gap-2">
                     <MapPin /> {isOnline ? "Online" : address}

@@ -9,9 +9,9 @@ export default function NotFound() {
           The page you are looking for does not exist.
         </h2>
         <p className="text-2xl">
-          Go back to your{" "}
-          <Link href="/feed" className="underline underline-offset-4 hover:no-underline">
-            feed.
+          Go back to{" "}
+          <Link href="/home" className="underline underline-offset-4 hover:no-underline">
+            home.
           </Link>
         </p>
       </div>

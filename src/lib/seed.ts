@@ -8,7 +8,7 @@ const opportunities = [
       "Create a short birthday poem for Mr. Charles, a 92-year-old WWII veteran in hospice care.",
     longDescription:
       "Mr. Charles, a 92-year-old WWII veteran in hospice, loves receiving personal messages. We're collecting short poems to honor his birthday and thank him for his service. Your words can bring him a smile during this special time.",
-    createdOn: new Date("2025-06-15T09:00:00Z"),
+    dueDate: new Date("2025-07-01T23:33:43.411Z"),
     createdBy: "Hope Veterans Network",
     isOnline: true,
     estimatedTime: 20,
@@ -22,7 +22,7 @@ const opportunities = [
       "Help Ms. Linda in Seattle learn how to send emails and open attachments using Gmail.",
     longDescription:
       "Ms. Linda wants to stay in touch with family but struggles with email basics. Meet her at her community center and guide her through composing, sending, and opening attachments using Gmail. No tech degree needed—just patience and kindness.",
-    createdOn: new Date("2025-06-17T14:00:00Z"),
+    dueDate: new Date("2025-07-03T23:33:43.411Z"),
     createdBy: "Community Care Seattle",
     isOnline: false,
     estimatedTime: 30,
@@ -37,7 +37,7 @@ const opportunities = [
       "Record a Spanish literature chapter aloud for a visually impaired student in Dallas.",
     longDescription:
       "A student in Dallas with visual impairment needs help catching up in Spanish class. By recording a chapter from their assigned literature book, you'll make education more accessible. Native or fluent Spanish speakers are preferred for this task.",
-    createdOn: new Date("2025-06-16T11:30:00Z"),
+    dueDate: new Date("2025-07-02T23:33:43.411Z"),
     createdBy: "Access Ed Dallas",
     isOnline: true,
     estimatedTime: 25,
@@ -51,7 +51,7 @@ const opportunities = [
       "Make a brief phone call to Mr. Barry in Ohio to brighten his day and reduce loneliness.",
     longDescription:
       "Mr. Barry, living alone in Ohio, looks forward to hearing a friendly voice. Your short check-in call can lift his spirits and help combat isolation. No experience needed—just a warm attitude and willingness to chat for a few minutes.",
-    createdOn: new Date("2025-06-18T16:45:00Z"),
+    dueDate: new Date("2025-07-04T23:33:43.411Z"),
     createdBy: "KindVoice",
     isOnline: true,
     estimatedTime: 15,
@@ -65,7 +65,7 @@ const opportunities = [
       "Design a cheerful get-well card for Ava, age 6, undergoing chemotherapy in Denver.",
     longDescription:
       "Ava is a brave 6-year-old fighting cancer in Denver. Your colorful, creative get-well card will help brighten her hospital stay. Both digital designs and hand-drawn cards are welcome. Bring smiles and hope with your artwork.",
-    createdOn: new Date("2025-06-14T08:00:00Z"),
+    dueDate: new Date("2025-07-01T23:33:43.411Z"),
     createdBy: "Healing Hearts Foundation",
     isOnline: true,
     estimatedTime: 30,
@@ -79,7 +79,7 @@ const opportunities = [
       "Translate a flyer about free meals for Vietnamese-speaking families in Philadelphia.",
     longDescription:
       "Help Philadelphia's community center translate a flyer about their free meal program into Vietnamese. Your translation ensures more residents can access this essential resource. Native speakers or fluent Vietnamese volunteers encouraged.",
-    createdOn: new Date("2025-06-17T10:00:00Z"),
+    dueDate: new Date("2025-07-03T23:33:43.411Z"),
     createdBy: "Philly Mutual Aid",
     isOnline: true,
     estimatedTime: 35,
@@ -93,7 +93,7 @@ const opportunities = [
       "Assist Mrs. Taylor in Sarasota with setting up Zoom to join her book club meetings.",
     longDescription:
       "Mrs. Taylor in Sarasota wants to reconnect with her weekly book club but needs help installing and using Zoom on her tablet. Meet her at her home or community center to walk her through setup and basic use. Patience and tech skills needed.",
-    createdOn: new Date("2025-06-19T13:00:00Z"),
+    dueDate: new Date("2025-07-05T23:33:43.411Z"),
     createdBy: "Golden Years Center",
     isOnline: false,
     estimatedTime: 20,
@@ -108,7 +108,7 @@ const opportunities = [
       "Make a 2-minute educational video about climate change for 4th graders.",
     longDescription:
       "Local 4th graders are learning about climate change. Create a short, engaging video explaining the basics in simple terms. Feel free to use animation, props, or live action to help kids understand this important topic in under 2 minutes.",
-    createdOn: new Date("2025-06-16T12:00:00Z"),
+    dueDate: new Date("2025-07-02T23:33:43.411Z"),
     createdBy: "Green Future Youth Project",
     isOnline: true,
     estimatedTime: 40,
@@ -122,7 +122,7 @@ const opportunities = [
       "Role-play a short interview with a newly settled refugee in Chicago.",
     longDescription:
       "A refugee new to Chicago is preparing for job interviews. Spend about 30 minutes role-playing questions and giving feedback to help them build confidence and improve communication skills. Great for anyone with HR or coaching experience.",
-    createdOn: new Date("2025-06-18T17:30:00Z"),
+    dueDate: new Date("2025-07-04T23:33:43.411Z"),
     createdBy: "New Start Chicago",
     isOnline: false,
     estimatedTime: 30,
@@ -137,7 +137,7 @@ const opportunities = [
       "Read a chapter from 'Pride and Prejudice' for a free online audiobook library.",
     longDescription:
       "Join the effort to build a free public audiobook collection by recording yourself reading a chapter from 'Pride and Prejudice.' Clear audio and expressive reading style preferred. Help bring classic literature to more listeners worldwide.",
-    createdOn: new Date("2025-06-15T15:00:00Z"),
+    dueDate: new Date("2025-07-01T23:33:43.411Z"),
     createdBy: "Voices for All",
     isOnline: true,
     estimatedTime: 25,
@@ -151,7 +151,7 @@ const opportunities = [
       "Help sort, label, and organize food donations at a local pantry in Boston.",
     longDescription:
       "The Neighborhood Food Pantry in Boston receives daily food donations and needs help sorting, labeling, and shelving items for distribution to families in need. Some light lifting may be involved. Perfect for hands-on volunteers.",
-    createdOn: new Date("2025-06-20T10:00:00Z"),
+    dueDate: new Date("2025-07-06T23:33:43.411Z"),
     createdBy: "Neighborhood Food Pantry",
     isOnline: false,
     estimatedTime: 45,
@@ -166,7 +166,7 @@ const opportunities = [
       "Create social media graphics for an animal shelter’s pet adoption campaign.",
     longDescription:
       "The Happy Tails Animal Shelter is running a pet adoption campaign and needs social media graphics for Facebook and Instagram. Use your graphic design skills to help promote adoptable pets and find them loving homes.",
-    createdOn: new Date("2025-06-21T12:30:00Z"),
+    dueDate: new Date("2025-07-07T23:33:43.411Z"),
     createdBy: "Happy Tails Animal Shelter",
     isOnline: true,
     estimatedTime: 60,
@@ -180,7 +180,7 @@ const opportunities = [
       "Join a tree-planting event at Jefferson Park to help green the neighborhood.",
     longDescription:
       "Join volunteers at Jefferson Park for a tree-planting event to improve air quality and provide shade. No prior experience needed—tools and guidance provided on-site. Great for families and groups wanting a hands-on outdoor project.",
-    createdOn: new Date("2025-06-22T09:00:00Z"),
+    dueDate: new Date("2025-07-08T23:33:43.411Z"),
     createdBy: "City Green Teams",
     isOnline: false,
     estimatedTime: 120,
@@ -195,7 +195,7 @@ const opportunities = [
       "Help serve hot meals to individuals experiencing homelessness at the downtown shelter.",
     longDescription:
       "Join the meal service team at Downtown Homeless Shelter. Volunteers help serve dinner and engage positively with guests. Training provided before your shift. A great way to give back to the community and offer support to those in need.",
-    createdOn: new Date("2025-06-23T17:00:00Z"),
+    dueDate: new Date("2025-07-09T23:33:43.411Z"),
     createdBy: "Downtown Homeless Shelter",
     isOnline: false,
     estimatedTime: 90,
@@ -210,7 +210,7 @@ const opportunities = [
       "Help refresh the walls of Washington Elementary with a new coat of paint.",
     longDescription:
       "Washington Elementary is giving its classrooms a much-needed facelift. Volunteers will help paint classroom walls and trim. Paint and supplies provided. Wear clothes you don’t mind getting messy. Great for team or group volunteering.",
-    createdOn: new Date("2025-06-24T09:30:00Z"),
+    dueDate: new Date("2025-07-10T23:33:43.411Z"),
     createdBy: "Bright Classrooms Project",
     isOnline: false,
     estimatedTime: 180,
@@ -225,7 +225,7 @@ const opportunities = [
       "Help set up, sort books, and assist customers during the annual library book sale.",
     longDescription:
       "The city library is hosting its annual book sale. Volunteers help set up tables, organize books, assist shoppers, and clean up afterward. Proceeds support library programs. If you love books and helping the community, this is for you.",
-    createdOn: new Date("2025-06-25T08:00:00Z"),
+    dueDate: new Date("2025-07-11T23:33:43.411Z"),
     createdBy: "Friends of the Library",
     isOnline: false,
     estimatedTime: 120,
@@ -240,7 +240,7 @@ const opportunities = [
       "Join a community effort to clean litter from the Santa Monica beach.",
     longDescription:
       "Help protect marine life and beautify the shoreline by participating in a beach cleanup at Santa Monica. Gloves, bags, and tools will be provided. This is a great outdoor volunteer opportunity for individuals or families looking to make a difference.",
-    createdOn: new Date("2025-06-26T07:30:00Z"),
+    dueDate: new Date("2025-07-12T23:33:43.411Z"),
     createdBy: "Coastal Care Volunteers",
     isOnline: false,
     estimatedTime: 90,
@@ -248,8 +248,6 @@ const opportunities = [
     contactEmail: "cleanup@coastalcare.org",
     tags: ["environment", "beach", "in-person", "outdoors", "cleanup"],
   },
-
-  // --- New Online Opportunities ---
   {
     status: "not-started",
     title: "Transcribe Historical Letters",
@@ -257,7 +255,7 @@ const opportunities = [
       "Help digitize history by transcribing scanned letters from the 1800s.",
     longDescription:
       "Join a national archive project to transcribe scanned handwritten letters from the 1800s. Your work will help researchers and historians access these documents. A great task for detail-oriented volunteers who enjoy history and typing.",
-    createdOn: new Date("2025-06-22T13:00:00Z"),
+    dueDate: new Date("2025-07-08T23:33:43.411Z"),
     createdBy: "National Archive Volunteers",
     isOnline: true,
     estimatedTime: 45,
@@ -271,7 +269,7 @@ const opportunities = [
       "Help moderate a safe and welcoming online discussion forum for teens.",
     longDescription:
       "Support a safe online space for teens by serving as a forum moderator. Duties include reviewing posts for safety, flagging inappropriate content, and welcoming new members. Training provided. Great for anyone interested in youth engagement.",
-    createdOn: new Date("2025-06-23T16:00:00Z"),
+    dueDate: new Date("2025-07-09T23:33:43.411Z"),
     createdBy: "SafeSpace Online",
     isOnline: true,
     estimatedTime: 60,
@@ -285,7 +283,7 @@ const opportunities = [
       "Review and correct automated text transcriptions from Braille documents.",
     longDescription:
       "Help improve accessibility for blind students by proofreading AI-generated transcriptions of Braille textbooks. Ensure accurate spelling and formatting. Training on Braille not required—just strong reading and grammar skills.",
-    createdOn: new Date("2025-06-24T11:00:00Z"),
+    dueDate: new Date("2025-07-10T23:33:43.411Z"),
     createdBy: "Access Text Project",
     isOnline: true,
     estimatedTime: 50,
@@ -299,7 +297,7 @@ const opportunities = [
       "Create a logo for a new virtual mentorship program connecting teens with role models.",
     longDescription:
       "The Youth Steps Mentorship Program needs a clean, modern logo for use on their website and social media. If you have graphic design skills and want to help empower youth through mentorship, this is your chance to contribute creatively.",
-    createdOn: new Date("2025-06-25T15:00:00Z"),
+    dueDate: new Date("2025-07-11T23:33:43.411Z"),
     createdBy: "Youth Steps Mentorship",
     isOnline: true,
     estimatedTime: 90,
@@ -313,7 +311,7 @@ const opportunities = [
       "Write uplifting letters for patients undergoing treatment in hospitals nationwide.",
     longDescription:
       "Brighten the day of hospital patients across the country by writing uplifting and encouraging letters. Your message of hope and support will be delivered by partner hospitals. This project is entirely remote and can be done anytime from home.",
-    createdOn: new Date("2025-06-26T10:00:00Z"),
+    dueDate: new Date("2025-07-12T23:33:43.411Z"),
     createdBy: "Letters of Light",
     isOnline: true,
     estimatedTime: 30,

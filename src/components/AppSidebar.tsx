@@ -7,6 +7,7 @@ import {
   Goal,
   Store,
   Award,
+  Compass,
 } from "lucide-react";
 import {
   Sidebar,
@@ -28,8 +29,8 @@ import { signOut } from "@/auth";
 
 const platformItems: SidebarItem[] = [
   {
-    title: "Feed",
-    url: "/feed",
+    title: "Home",
+    url: "/home",
     icon: Home,
   },
   {
@@ -45,6 +46,11 @@ const platformItems: SidebarItem[] = [
 ];
 
 const socialItems: SidebarItem[] = [
+  {
+    title: "Discover",
+    url: "/discover",
+    icon: Compass,
+  },
   {
     title: "Leaderboard",
     url: "/leaderboard",

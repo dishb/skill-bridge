@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -14,69 +14,36 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
-import type Goal from "@/types/goal";
+} from "@/components/ui/table";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Badge } from "./ui/badge";
-import { Check, X, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
+import {
+  getClaimedOpportunities,
+  unclaimOpportunity,
+} from "@/app/actions/opportunity";
+import { Button } from "@/components/ui/button";
+import { X, Send } from "lucide-react";
+import type Opportunity from "@/types/opportunity";
 
-const columns: ColumnDef<Goal>[] = [
+const columns: ColumnDef<Opportunity>[] = [
   {
-    accessorKey: "hours",
-    header: "Hours",
+    accessorKey: "title",
+    header: "Title",
   },
   {
-    accessorKey: "timePassed",
-    header: "Time passed",
-    cell: ({ row }) => {
-      const createdOn = new Date(row.original.createdOn);
-      console.log(row.original.completedOn);
-      const completedOn = row.original.completedOn
-        ? new Date(row.original.completedOn)
-        : new Date();
-
-      const timeLeft = completedOn.getTime() - createdOn.getTime();
-      const daysPassed = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      return <>{`${daysPassed} days`}</>;
-    },
+    accessorKey: "createdBy",
+    header: "Created by",
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "claimedOn",
+    header: "Claimed on",
     cell: ({ row }) => {
-      const status: string = row.original.status;
-      if (status === "completed") {
-        return (
-          <Badge variant="outline" className="text-green-500">
-            <Check /> Completed
-          </Badge>
-        );
-      } else if (status === "in-progress") {
-        return (
-          <Badge variant="outline" className="text-yellow-500">
-            <Clock /> In progress
-          </Badge>
-        );
-      } else if (status === "not-started") {
-        return (
-          <Badge variant="outline" className="text-red-500">
-            <X /> Not started
-          </Badge>
-        );
-      }
-    },
-  },
-  {
-    accessorKey: "createdOn",
-    header: "Created on",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("createdOn"));
+      const date = new Date(row.getValue("claimedOn"));
       const formattedDate = new Intl.DateTimeFormat("en-US", {
         year: "numeric",
         month: "2-digit",
@@ -86,10 +53,68 @@ const columns: ColumnDef<Goal>[] = [
       return <>{formattedDate}</>;
     },
   },
+  {
+    accessorKey: "dueDate",
+    header: "Due date",
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("dueDate"));
+      const formattedDate = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(date);
+
+      return <>{formattedDate}</>;
+    },
+  },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const recipientEmail = row.original.contactEmail;
+      const documentId = row.original._id;
+
+      async function onClick() {
+        try {
+          const res = await fetch("/api/send-approval-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ recipientEmail, documentId }),
+          });
+
+          const resJson = await res.json();
+          if (!resJson.ok) {
+            throw new Error(
+              "An error occurred sending the volunteer hours approval request email."
+            );
+          }
+        } catch (err: any) {
+          console.log("ERROR", err.message);
+        }
+      }
+
+      return (
+        <div className="flex gap-2">
+          <Button onClick={onClick} className="hover:cursor-pointer">
+            Request hours <Send />
+          </Button>
+          <Button
+            className="hover:cursor-pointer"
+            variant="secondary"
+            onClick={async () => {
+              await unclaimOpportunity(row.original._id?.toString());
+            }}
+          >
+            Unclaim <X />
+          </Button>
+        </div>
+      );
+    },
+  },
 ];
 
-export default function GoalHistory() {
-  const [data, setData] = useState<Goal[]>([]);
+export default function Page() {
+  const [data, setData] = useState<any[]>([]);
 
   const table = useReactTable({
     data,
@@ -97,29 +122,32 @@ export default function GoalHistory() {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  async function handleFetchGoals() {
-    const res = await fetch("/api/get-goals", { method: "GET" });
-    const goals = await res.json();
-    setData(goals);
+  async function loadClaimedOpportunities() {
+    const res = await getClaimedOpportunities();
+    if (res.ok) {
+      setData(res.opportunities ?? []);
+    }
   }
 
   useEffect(() => {
-    handleFetchGoals();
+    loadClaimedOpportunities();
 
-    setInterval(() => {
-      handleFetchGoals();
+    const interval = setInterval(() => {
+      loadClaimedOpportunities();
     }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <Card className="col-span-2">
+    <Card>
       <CardHeader>
-        <CardTitle className="text-3xl">Goal History</CardTitle>
+        <CardTitle className="text-3xl">My Volunteering</CardTitle>
         <CardDescription className="text-lg">
-          View your past goals and their completion status.
+          View and manage your active volunteer opportunities.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col w-full h-full justify-center items-center gap-4">
+      <CardContent>
         <div className="rounded-md border w-full">
           <Table>
             <TableHeader>

@@ -18,13 +18,13 @@ import { useState, useEffect } from "react";
 import { getLeaders, initializeHours } from "@/app/actions/hours";
 import { Award } from "lucide-react";
 
-interface ColumnType {
+interface Column {
   position: number;
   userName: string;
   totalHours: number;
 }
 
-const columns: ColumnDef<ColumnType>[] = [
+const columns: ColumnDef<Column>[] = [
   {
     accessorKey: "position",
     header: "Position",
@@ -65,13 +65,7 @@ const columns: ColumnDef<ColumnType>[] = [
 ];
 
 export default function GoalHistory() {
-  const [data, setData] = useState<
-    {
-      position: number;
-      userName: string;
-      totalHours: number;
-    }[]
-  >([]);
+  const [data, setData] = useState<Column[]>([]);
 
   const table = useReactTable({
     data,

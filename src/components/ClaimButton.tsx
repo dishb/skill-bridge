@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { claim } from "@/app/actions/opportunity";
+import { claimOpportunity } from "@/app/actions/opportunity";
 import { Button } from "./ui/button";
 import { Check, CheckCheck } from "lucide-react";
 import type ClaimButtonProps from "@/types/claimButtonProps";
@@ -18,7 +17,7 @@ export default function ClaimButton({
       className="hover:cursor-pointer"
       disabled={disabled}
       onClick={async () => {
-        const res = await claim(id);
+        const res = await claimOpportunity(id);
         if (res.ok) onStatusChange("completed");
       }}
     >

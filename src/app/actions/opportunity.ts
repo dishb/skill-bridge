@@ -21,7 +21,7 @@ export async function getOpportunities() {
 
     const opportunities = result.map((opportunity) => ({
       ...opportunity,
-      _id: opportunity._id.toString(),
+      _id: opportunity._id.toString()
     }));
 
     return { ok: true, opportunities: opportunities };
@@ -30,7 +30,39 @@ export async function getOpportunities() {
   }
 }
 
-export async function claim(id: string | undefined) {
+export async function unclaimOpportunity(id: string | undefined) {
+  if (!id) {
+    throw new Error("The volunteer opportunity could not be found.");
+  }
+
+  try {
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      throw new Error("Not authenticated.");
+    }
+
+    const db = client.db("companydb");
+    const opportunitiesCollection = db.collection("opportunities");
+    await opportunitiesCollection.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          status: "not-started",
+        },
+        $unset: {
+          claimedBy: undefined,
+          claimedOn: undefined,
+        },
+      }
+    );
+
+    return { ok: true };
+  } catch (err: any) {
+    return { ok: false, error: err.message };
+  }
+}
+
+export async function claimOpportunity(id: string | undefined) {
   if (!id) {
     throw new Error("The volunteer opportunity could not be found.");
   }
@@ -48,7 +80,8 @@ export async function claim(id: string | undefined) {
       {
         $set: {
           status: "in-progress",
-          acceptedBy: new ObjectId(session.user.id),
+          claimedBy: new ObjectId(session.user.id),
+          claimedOn: new Date(),
         },
       }
     );
@@ -56,6 +89,37 @@ export async function claim(id: string | undefined) {
     return { ok: true };
   } catch (err: any) {
     console.log(err.message);
+    return { ok: false, error: err.message };
+  }
+}
+
+export async function getClaimedOpportunities() {
+  try {
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      throw new Error("Not authenticated.");
+    }
+
+    const db = client.db("companydb");
+    const opportunitiesCollection = db.collection("opportunities");
+    const result = await opportunitiesCollection
+      .find({ claimedBy: new ObjectId(session.user.id) })
+      .toArray();
+
+    if (result === null) {
+      throw new Error(
+        "An error occurred finding your volunteer opportunities."
+      );
+    }
+
+    const opportunities = result.map((opportunity) => ({
+      ...opportunity,
+      _id: opportunity._id.toString(),
+      claimedBy: opportunity.claimedBy.toString(),
+    }));
+
+    return { ok: true, opportunities: opportunities };
+  } catch (err: any) {
     return { ok: false, error: err.message };
   }
 }

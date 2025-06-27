@@ -5,13 +5,14 @@ export default interface Opportunity {
   status: "completed" | "in-progress" | "not-started";
   title: string;
   description: string;
-  createdOn: Date;
+  dueDate: Date;
   createdBy: string;
   isOnline: boolean;
   estimatedTime: number;
   longDescription: string;
   contactEmail: string;
-  acceptedBy?: ObjectId;
+  claimedBy?: ObjectId;
+  claimedOn?: Date;
   address?: string;
   tags?: string[];
 }

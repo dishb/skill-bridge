@@ -9,7 +9,7 @@ export default function LoginButton() {
     <Button
       className="hover:cursor-pointer"
       onClick={async () => {
-        await signIn("google", { redirectTo: "/feed" });
+        await signIn("google", { redirectTo: "/home" });
       }}
     >
       <SiGoogle />

@@ -34,7 +34,6 @@ export default function GoalForm({ hasActiveGoal }: GoalFormProps) {
     const goal: Goal = await res.json();
 
     setGoalHours(goal?.hours ?? 0);
-    console.log("createdOn", goal?.createdOn);
     setGoalDate(
       goal && goal?.createdOn
         ? dateFormatter.format(new Date(goal?.createdOn))

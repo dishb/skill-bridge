@@ -14,10 +14,10 @@ export async function hasActiveGoal() {
 
     const db = client.db("customerdb");
     const goalCollection = db.collection("goals");
-    const result = (await goalCollection.findOne({
+    const result = await goalCollection.findOne({
       userId: new ObjectId(session.user.id),
       status: { $ne: "completed" },
-    }));
+    });
 
     return { ok: true, hasActiveGoal: result !== null };
   } catch (err: any) {

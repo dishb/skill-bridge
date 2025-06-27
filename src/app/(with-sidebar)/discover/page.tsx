@@ -59,7 +59,7 @@ export default function Page() {
               status={item.status}
               title={item.title}
               description={item.description}
-              createdOn={item.createdOn}
+              dueDate={item.dueDate}
               createdBy={item.createdBy}
               isOnline={item.isOnline}
               estimatedTime={item.estimatedTime}
