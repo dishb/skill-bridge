@@ -85,6 +85,24 @@ const columns: ColumnDef<Goal>[] = [
       return <>{formattedDate}</>;
     },
   },
+  {
+    accessorKey: "completedOn",
+    header: "Completed on",
+    cell: ({ row }) => {
+      if (!row.getValue("completedOn")) {
+        return;
+      }
+
+      const date = new Date(row.getValue("completedOn"));
+      const formattedDate = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(date);
+
+      return <>{formattedDate}</>;
+    },
+  },
 ];
 
 export default function GoalHistory() {

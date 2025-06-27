@@ -22,28 +22,48 @@ export async function POST(
 
     const claimedBy: string = res.claimedBy;
     const estimatedTime: number = res.estimatedTime / 60;
+
     const customerDB = client.db("customerdb");
     const hoursCollection = customerDB.collection("hours");
-
-    await hoursCollection.findOneAndUpdate(
-      { userId: new ObjectId(claimedBy) },
-      { $inc: { totalHours: estimatedTime } }
-    );
-
     const goalsCollection = customerDB.collection("goals");
+
     const activeGoal = await goalsCollection.findOne({
       userId: new ObjectId(claimedBy),
       status: { $ne: "completed" },
     });
+    const userHours = await hoursCollection.findOne({
+      userId: new ObjectId(claimedBy),
+    });
+
+    if (!userHours) {
+      throw new Error("An error occurred finding your volunteer hours.");
+    }
+
+    await hoursCollection.updateOne(
+      { userId: new ObjectId(claimedBy) },
+      { $inc: { totalHours: estimatedTime } }
+    );
 
     if (activeGoal) {
-      await hoursCollection.findOneAndUpdate(
+      const updatedHours = (userHours.hoursTowardsGoal ?? 0) + estimatedTime;
+
+      let update: any = { status: "in-progress" };
+      let hoursTowardsGoalUpdate = { hoursTowardsGoal: updatedHours };
+
+      if (updatedHours >= activeGoal.hours) {
+        update.status = "completed";
+        update.completedOn = new Date();
+        hoursTowardsGoalUpdate.hoursTowardsGoal = 0;
+      }
+
+      await hoursCollection.updateOne(
         { userId: new ObjectId(claimedBy) },
-        { $inc: { hoursTowardsGoal: estimatedTime } }
+        { $set: hoursTowardsGoalUpdate }
       );
-      await goalsCollection.findOneAndUpdate(
-        { userId: new ObjectId(claimedBy) },
-        { $set: { status: "in-progress" } }
+
+      await goalsCollection.updateOne(
+        { _id: activeGoal._id },
+        { $set: update }
       );
     }
 

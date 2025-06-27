@@ -54,8 +54,8 @@ export default function HoursCounter() {
       <CardFooter className="flex-col gap-2 text-sm">
         <p className="text-center text-lg leading-none">
           {totalHours !== 0
-            ? "You're doing great, keep up the good work!"
-            : "Complete a volunteering opportunity and claim its hours!"}
+            ? "You're doing great, keep up the good work."
+            : "Complete a volunteering opportunity and claim its hours."}
         </p>
       </CardFooter>
     </Card>

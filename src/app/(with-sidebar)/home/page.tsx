@@ -78,14 +78,14 @@ const columns: ColumnDef<Opportunity>[] = [
 
       async function onClick() {
         try {
+          toast.message("Sending approval request.", {
+            description: "Please wait while we send the email.",
+          });
+
           const res = await fetch("/api/send-approval-email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ recipientEmail, documentId }),
-          });
-
-          toast.message("Sending approval request.", {
-            description: "Please wait while we send the email.",
           });
 
           const resJson = await res.json();

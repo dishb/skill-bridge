@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config({ path: `${process.cwd()}/.env.local` });
 import client from "./db";
 
 const opportunities = [
@@ -320,7 +322,16 @@ const opportunities = [
   },
 ];
 
-const db = client.db("companydb");
-const opportunitiesCollection = db.collection("opportunities");
-opportunitiesCollection.deleteMany()
-opportunitiesCollection.insertMany(opportunities);
+async function seed() {
+  const db = client.db("companydb");
+  const opportunitiesCollection = db.collection("opportunities");
+  await opportunitiesCollection.deleteMany();
+  await opportunitiesCollection.insertMany(opportunities);
+  console.log("Finished seeding database.");
+  await client.close();
+}
+
+seed().catch((err) => {
+  console.error(err);
+  client.close();
+});
