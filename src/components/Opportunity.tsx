@@ -92,7 +92,7 @@ export default function Opportunity({
           <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="secondary" className="hover:cursor-pointer">
+              <Button variant="outline" className="hover:cursor-pointer">
                 Learn more <ArrowRight />
               </Button>
             </DialogTrigger>

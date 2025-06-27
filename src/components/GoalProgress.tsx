@@ -20,7 +20,7 @@ import { ChartConfig } from "./ui/chart";
 import { useEffect, useState } from "react";
 import Goal from "@/types/goal";
 import { CircleAlert } from "lucide-react";
-import { initializeHours, getHoursTowardsGoal } from "@/app/actions/hours";
+import { getHoursTowardsGoal } from "@/app/actions/hours";
 
 const chartConfig = {
   hours: {
@@ -58,14 +58,13 @@ export default function GoalProgress() {
     }
 
     loadGoalProgress();
-    initializeHours();
 
     const interval = setInterval(() => {
       loadGoalProgress();
     }, 1000);
 
     return () => clearInterval(interval);
-  },);
+  }, []);
 
   return (
     <Card>
@@ -116,7 +115,7 @@ export default function GoalProgress() {
                             y={viewBox.cy}
                             className="fill-foreground text-4xl font-bold"
                           >
-                            {(Number(percentage.toFixed(3)) * 100)}%
+                            {Number(percentage.toFixed(3)) * 100}%
                           </tspan>
                           <tspan
                             x={viewBox.cx}

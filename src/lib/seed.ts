@@ -322,4 +322,5 @@ const opportunities = [
 
 const db = client.db("companydb");
 const opportunitiesCollection = db.collection("opportunities");
+opportunitiesCollection.deleteMany()
 opportunitiesCollection.insertMany(opportunities);

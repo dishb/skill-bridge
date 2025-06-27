@@ -9,7 +9,7 @@ export default function NotFound() {
           The page you are looking for does not exist.
         </h2>
         <p className="text-2xl">
-          Go back to{" "}
+          Go back{" "}
           <Link href="/home" className="underline underline-offset-4 hover:no-underline">
             home.
           </Link>

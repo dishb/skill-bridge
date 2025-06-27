@@ -92,6 +92,40 @@ export async function claimOpportunity(id: string | undefined) {
   }
 }
 
+export async function getPastOpportunities() {
+  try {
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      throw new Error("Not authenticated.");
+    }
+
+    const db = client.db("companydb");
+    const opportunitiesCollection = db.collection("opportunities");
+    const result = await opportunitiesCollection
+      .find({
+        claimedBy: new ObjectId(session.user.id),
+        status: "completed",
+      })
+      .toArray();
+
+    if (result === null) {
+      throw new Error(
+        "An error occurred finding your past volunteer opportunities."
+      );
+    }
+
+    const opportunities = result.map((opportunity) => ({
+      ...opportunity,
+      _id: opportunity._id.toString(),
+      claimedBy: opportunity.claimedBy.toString(),
+    }));
+
+    return { ok: true, opportunities: opportunities };
+  } catch (err: any) {
+    return { ok: false, error: err.message };
+  }
+}
+
 export async function getClaimedOpportunities() {
   try {
     const session = await auth();
@@ -121,6 +155,36 @@ export async function getClaimedOpportunities() {
     }));
 
     return { ok: true, opportunities: opportunities };
+  } catch (err: any) {
+    return { ok: false, error: err.message };
+  }
+}
+
+export async function getTotalCompletedOpportunities() {
+  try {
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      throw new Error("Not authenticated.");
+    }
+
+    const db = client.db("companydb");
+    const opportunitiesCollection = db.collection("opportunities");
+    const res = await opportunitiesCollection
+      .find({
+        claimedBy: new ObjectId(session.user.id),
+        status: "completed",
+      })
+      .toArray();
+
+    if (res === null) {
+      throw new Error(
+        "An error occurred finding your completed volunteer opportunities."
+      );
+    }
+
+    const totalOpportunities = res.length;
+
+    return { ok: true, totalOpportunities: totalOpportunities };
   } catch (err: any) {
     return { ok: false, error: err.message };
   }

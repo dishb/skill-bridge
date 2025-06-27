@@ -22,15 +22,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
-import {
-  getClaimedOpportunities,
-  unclaimOpportunity,
-} from "@/app/actions/opportunity";
-import { initializeHours } from "@/app/actions/hours";
-import { Button } from "@/components/ui/button";
-import { X, Send } from "lucide-react";
+import { getPastOpportunities } from "@/app/actions/opportunity";
 import type Opportunity from "@/types/opportunity";
-import { toast } from "sonner";
 
 const columns: ColumnDef<Opportunity>[] = [
   {
@@ -69,64 +62,9 @@ const columns: ColumnDef<Opportunity>[] = [
       return <>{formattedDate}</>;
     },
   },
-  {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: ({ row }) => {
-      const recipientEmail = row.original.contactEmail;
-      const documentId = row.original._id;
-
-      async function onClick() {
-        try {
-          const res = await fetch("/api/send-approval-email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ recipientEmail, documentId }),
-          });
-
-          toast.message("Sending approval request.", {
-            description: "Please wait while we send the email.",
-          });
-
-          const resJson = await res.json();
-          if (resJson.ok) {
-            toast.success("Successfully sent approval request.", {
-              description:
-                "You will recieve your hours once the organization approves them!",
-            });
-          } else {
-            throw new Error(
-              "An error occurred sending the volunteer hours approval request email."
-            );
-          }
-        } catch (err: any) {
-          toast.error("500: Internal Server Error", {
-            description: err.message,
-          });
-        }
-      }
-
-      return (
-        <div className="flex gap-2">
-          <Button onClick={onClick} className="hover:cursor-pointer">
-            Request hours <Send />
-          </Button>
-          <Button
-            className="hover:cursor-pointer"
-            variant="outline"
-            onClick={async () => {
-              await unclaimOpportunity(row.original._id?.toString());
-            }}
-          >
-            Unclaim <X />
-          </Button>
-        </div>
-      );
-    },
-  },
 ];
 
-export default function Page() {
+export default function PastVolunteering() {
   const [data, setData] = useState<any[]>([]);
 
   const table = useReactTable({
@@ -136,29 +74,28 @@ export default function Page() {
   });
 
   useEffect(() => {
-    async function loadClaimedOpportunities() {
-      const res = await getClaimedOpportunities();
+    async function loadPastOpportunities() {
+      const res = await getPastOpportunities();
       if (res.ok) {
         setData(res.opportunities ?? []);
       }
     }
 
-    loadClaimedOpportunities();
-    initializeHours();
+    loadPastOpportunities();
 
     const interval = setInterval(() => {
-      loadClaimedOpportunities();
+      loadPastOpportunities();
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <Card>
+    <Card className="col-span-2">
       <CardHeader>
-        <CardTitle className="text-3xl">My Volunteering</CardTitle>
+        <CardTitle className="text-3xl">Past Volunteering</CardTitle>
         <CardDescription className="text-lg">
-          View and manage your active volunteer opportunities.
+          View volunteer opportunities that you claimed and completed.
         </CardDescription>
       </CardHeader>
       <CardContent>
