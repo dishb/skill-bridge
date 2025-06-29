@@ -108,9 +108,6 @@ const columns: ColumnDef<Opportunity>[] = [
 
       return (
         <div className="flex gap-2">
-          <Button onClick={onClick} className="hover:cursor-pointer">
-            Request hours <Send />
-          </Button>
           <Button
             className="hover:cursor-pointer"
             variant="outline"
@@ -119,6 +116,9 @@ const columns: ColumnDef<Opportunity>[] = [
             }}
           >
             Unclaim <X />
+          </Button>
+          <Button onClick={onClick} className="hover:cursor-pointer">
+            Request hours <Send />
           </Button>
         </div>
       );

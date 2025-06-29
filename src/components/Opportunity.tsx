@@ -27,7 +27,7 @@ import {
   MapPin,
   Calendar,
   BadgePlus,
-  ArrowRight,
+  ArrowUpRight,
   X,
   MailQuestionMark,
 } from "lucide-react";
@@ -89,11 +89,10 @@ export default function Opportunity({
       </CardContent>
       <CardFooter className="mt-auto">
         <div className="grid grid-cols-2 gap-4">
-          <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline" className="hover:cursor-pointer">
-                Learn more <ArrowRight />
+                Learn more <ArrowUpRight />
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -148,6 +147,7 @@ export default function Opportunity({
               </DialogFooter>
             </DialogContent>
           </Dialog>
+          <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
         </div>
       </CardFooter>
     </Card>
