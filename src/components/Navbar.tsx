@@ -6,10 +6,15 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const pageTitle = pathname
-    .split("/")
-    .filter((segment) => segment)
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1));
+  let pageTitle = [""];
+  if (pathname.toLowerCase().includes("volunteer")) {
+    pageTitle = ["Volunteer"];
+  } else {
+    pageTitle = pathname
+      .split("/")
+      .filter((segment) => segment)
+      .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1));
+  }
 
   return (
     <nav className="flex w-full mb-4 justify-between items-center">

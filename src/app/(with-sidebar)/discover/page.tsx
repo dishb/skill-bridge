@@ -2,7 +2,7 @@
 
 import Opportunity from "@/components/Opportunity";
 import ProgressBar from "@/components/ProgressBar";
-import { getOpportunities } from "@/app/actions/opportunity";
+import { getUnclaimedOpportunities } from "@/app/actions/opportunity";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -12,7 +12,7 @@ export default function Page() {
   const [opportunities, setOpportunities] = useState<any[]>([]);
 
   useEffect(() => {
-    getOpportunities().then((result) => {
+    getUnclaimedOpportunities().then((result) => {
       setOpportunities(result.opportunities ?? []);
     });
   }, []);

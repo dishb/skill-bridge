@@ -12,5 +12,6 @@ export const config = {
     "/settings",
     "/profile",
     "/leaderboard",
+    "/volunteer/:path",
   ],
 };

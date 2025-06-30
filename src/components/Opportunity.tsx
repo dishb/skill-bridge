@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type Opportunity from "@/types/opportunity";
+import type OpportunityProps from "@/types/opportunityProps";
 import {
   Card,
   CardContent,
@@ -30,9 +30,12 @@ import {
   ArrowUpRight,
   X,
   MailQuestionMark,
+  Send,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import ClaimButton from "./ClaimButton";
+import { unclaimOpportunity } from "@/app/actions/opportunity";
+import { toast } from "sonner";
 
 export default function Opportunity({
   _id,
@@ -47,7 +50,8 @@ export default function Opportunity({
   address,
   longDescription,
   contactEmail,
-}: Opportunity) {
+  homePage,
+}: OpportunityProps) {
   const [status, setStatus] = useState(initialStatus);
 
   const formatter = new Intl.DateTimeFormat("en-US", {
@@ -56,6 +60,36 @@ export default function Opportunity({
     day: "2-digit",
   });
   const formattedDueDate = formatter.format(dueDate);
+
+  async function onClick() {
+    try {
+      toast.message("Sending approval request.", {
+        description: "Please wait while we send the email.",
+      });
+
+      const res = await fetch("/api/send-approval-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contactEmail, _id }),
+      });
+
+      const resJson = await res.json();
+      if (resJson.ok) {
+        toast.success("Successfully sent approval request.", {
+          description:
+            "You will recieve your hours once the organization approves them!",
+        });
+      } else {
+        throw new Error(
+          "An error occurred sending the volunteer hours approval request email."
+        );
+      }
+    } catch (err: any) {
+      toast.error("500: Internal Server Error", {
+        description: err.message,
+      });
+    }
+  }
 
   return (
     <Card>
@@ -88,7 +122,9 @@ export default function Opportunity({
         </div>
       </CardContent>
       <CardFooter className="mt-auto">
-        <div className="grid grid-cols-2 gap-4">
+        <div
+          className={`grid gap-4 ${homePage ? "grid-cols-3" : "grid-cols-2"}`}
+        >
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline" className="hover:cursor-pointer">
@@ -147,7 +183,24 @@ export default function Opportunity({
               </DialogFooter>
             </DialogContent>
           </Dialog>
-          <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
+          {homePage ? (
+            <>
+              <Button
+                className="hover:cursor-pointer"
+                variant="outline"
+                onClick={async () => {
+                  await unclaimOpportunity(_id);
+                }}
+              >
+                Unclaim <X />
+              </Button>
+              <Button onClick={onClick} className="hover:cursor-pointer">
+                Request hours <Send />
+              </Button>
+            </>
+          ) : (
+            <ClaimButton id={_id} status={status} onStatusChange={setStatus} />
+          )}
         </div>
       </CardFooter>
     </Card>

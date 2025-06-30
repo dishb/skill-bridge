@@ -3,8 +3,9 @@
 import { auth } from "@/auth";
 import client from "@/lib/db";
 import { ObjectId } from "mongodb";
+import type Opportunity from "@/types/opportunity";
 
-export async function getOpportunities() {
+export async function getOpportunity(id: string) {
   try {
     const session = await auth();
     if (!session || !session.user || !session.user.id) {
@@ -13,7 +14,51 @@ export async function getOpportunities() {
 
     const db = client.db("companydb");
     const opportunitiesCollection = db.collection("opportunities");
-    const result = await opportunitiesCollection.find().toArray();
+    const result = await opportunitiesCollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (result === null) {
+      throw new Error(
+        "An error occurred finding the requested volunteer opportunity."
+      );
+    }
+
+    const opportunity: Opportunity = {
+      _id: result._id.toString(),
+      status: result.status,
+      title: result.title,
+      description: result.description,
+      dueDate: result.dueDate,
+      createdBy: result.createdBy,
+      isOnline: result.isOnline,
+      estimatedTime: result.estimatedTime,
+      longDescription: result.longDescription,
+      contactEmail: result.contactEmail,
+      claimedBy: result.claimedBy,
+      claimedOn: result.claimedOn,
+      address: result.address,
+      tags: result.tags,
+    };
+
+    return { ok: true, opportunity: opportunity };
+  } catch (err: any) {
+    return { ok: false, error: err.message };
+  }
+}
+
+export async function getUnclaimedOpportunities() {
+  try {
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      throw new Error("Not authenticated.");
+    }
+
+    const db = client.db("companydb");
+    const opportunitiesCollection = db.collection("opportunities");
+    const result = await opportunitiesCollection
+      .find({ claimedBy: undefined })
+      .toArray();
 
     if (result === null) {
       throw new Error("An error occurred finding volunteer opportunities.");

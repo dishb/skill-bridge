@@ -1,218 +1,87 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import Opportunity from "@/components/Opportunity";
+import { getClaimedOpportunities } from "@/app/actions/opportunity";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import {
-  getClaimedOpportunities,
-  unclaimOpportunity,
-} from "@/app/actions/opportunity";
-import { initializeHours } from "@/app/actions/hours";
-import { Button } from "@/components/ui/button";
-import { X, Send } from "lucide-react";
-import type Opportunity from "@/types/opportunity";
-import { toast } from "sonner";
-
-const columns: ColumnDef<Opportunity>[] = [
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: "createdBy",
-    header: "Created by",
-  },
-  {
-    accessorKey: "claimedOn",
-    header: "Claimed on",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("claimedOn"));
-      const formattedDate = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date);
-
-      return <>{formattedDate}</>;
-    },
-  },
-  {
-    accessorKey: "dueDate",
-    header: "Due date",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("dueDate"));
-      const formattedDate = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date);
-
-      return <>{formattedDate}</>;
-    },
-  },
-  {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: ({ row }) => {
-      const recipientEmail = row.original.contactEmail;
-      const documentId = row.original._id;
-
-      async function onClick() {
-        try {
-          toast.message("Sending approval request.", {
-            description: "Please wait while we send the email.",
-          });
-
-          const res = await fetch("/api/send-approval-email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ recipientEmail, documentId }),
-          });
-
-          const resJson = await res.json();
-          if (resJson.ok) {
-            toast.success("Successfully sent approval request.", {
-              description:
-                "You will recieve your hours once the organization approves them!",
-            });
-          } else {
-            throw new Error(
-              "An error occurred sending the volunteer hours approval request email."
-            );
-          }
-        } catch (err: any) {
-          toast.error("500: Internal Server Error", {
-            description: err.message,
-          });
-        }
-      }
-
-      return (
-        <div className="flex gap-2">
-          <Button
-            className="hover:cursor-pointer"
-            variant="outline"
-            onClick={async () => {
-              await unclaimOpportunity(row.original._id?.toString());
-            }}
-          >
-            Unclaim <X />
-          </Button>
-          <Button onClick={onClick} className="hover:cursor-pointer">
-            Request hours <Send />
-          </Button>
-        </div>
-      );
-    },
-  },
-];
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Page() {
-  const [data, setData] = useState<any[]>([]);
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const [search, setSearch] = useState("");
+  const [opportunities, setOpportunities] = useState<any[]>([]);
 
   useEffect(() => {
-    async function loadClaimedOpportunities() {
+    async function loadOpportunities() {
       const res = await getClaimedOpportunities();
-      if (res.ok) {
-        setData(res.opportunities ?? []);
-      }
+      setOpportunities(res.opportunities ?? []);
     }
 
-    loadClaimedOpportunities();
-    initializeHours();
+    loadOpportunities();
 
     const interval = setInterval(() => {
-      loadClaimedOpportunities();
+      loadOpportunities();
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
+  const filtered = opportunities.filter((item) =>
+    search.trim() === ""
+      ? true
+      : item.tags?.some((tag: string) =>
+          tag.toLowerCase().includes(search.toLowerCase())
+        )
+  );
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-3xl">My Volunteering</CardTitle>
-        <CardDescription className="text-lg">
-          View and manage your active volunteer opportunities.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="rounded-md border w-full">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-between">
+        <h2 className="font-bold text-3xl">My Volunteering</h2>
+
+        <div className="flex items-center gap-2 w-[30%]">
+          <div className="relative w-full">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <Search size={18} />
+            </span>
+            <Input
+              type="search"
+              placeholder="Search"
+              className="pl-10 w-full"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+      {filtered.length !== 0 ? (
+        <div className="grid grid-cols-2 gap-4">
+          {filtered.map((item, key) => (
+            <Opportunity
+              homePage
+              contactEmail={item.contactEmail}
+              longDescription={item.longDescription}
+              key={key}
+              _id={item._id}
+              status={item.status}
+              title={item.title}
+              description={item.description}
+              dueDate={item.dueDate}
+              createdBy={item.createdBy}
+              isOnline={item.isOnline}
+              estimatedTime={item.estimatedTime}
+              tags={item.tags}
+              address={item.address}
+            />
+          ))}
+        </div>
+      ) : (
+        <Card className="flex w-full justify-center items-center h-36">
+          <CardContent>
+            <p>No results found.</p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 }

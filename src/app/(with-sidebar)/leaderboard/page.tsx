@@ -16,7 +16,7 @@ import {
 } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
 import { getLeaders, initializeHours } from "@/app/actions/hours";
-import { Award } from "lucide-react";
+import { Crown } from "lucide-react";
 
 interface Column {
   position: number;
@@ -34,19 +34,19 @@ const columns: ColumnDef<Column>[] = [
       if (pos === 1) {
         return (
           <div className="flex items-center gap-2">
-            <Award className="text-yellow-500" /> {pos}
+            <Crown className="w-5 h-auto text-yellow-500" /> {pos}
           </div>
         );
       } else if (pos === 2) {
         return (
           <div className="flex items-center gap-2">
-            <Award className="text-gray-400" /> {pos}
+            <Crown className="w-5 h-auto text-gray-400" /> {pos}
           </div>
         );
       } else if (pos === 3) {
         return (
           <div className="flex items-center gap-2">
-            <Award className="text-yellow-700" /> {pos}
+            <Crown className="w-5 h-auto text-yellow-700" /> {pos}
           </div>
         );
       }
