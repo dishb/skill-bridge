@@ -18,27 +18,20 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const defaultOpen = cookieStore.get("sidebar_state")?.value ? cookieStore.get("sidebar_state")?.value === "true" : true;
+  const defaultOpen = cookieStore.get("sidebar_state")?.value
+    ? cookieStore.get("sidebar_state")?.value === "true"
+    : true;
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider defaultOpen={defaultOpen}>
-            <AppSidebar />
-            <div className="w-full p-4">
-              <Navbar />
-              <main>{children}</main>
-            </div>
-          </SidebarProvider>
-          <Toaster richColors closeButton />
-        </ThemeProvider>
-      </body>
-    </html>
+    <>
+      <SidebarProvider defaultOpen={defaultOpen}>
+        <AppSidebar />
+        <div className="w-full p-4">
+          <Navbar />
+          <main>{children}</main>
+        </div>
+      </SidebarProvider>
+      <Toaster richColors closeButton />
+    </>
   );
 }
