@@ -3,7 +3,6 @@ import "@/app/globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
 import { cookies } from "next/headers";
-import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "sonner";
 
