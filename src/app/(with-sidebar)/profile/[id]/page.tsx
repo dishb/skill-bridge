@@ -7,7 +7,6 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { toast } from "sonner";
 import { getTotalHours } from "@/app/actions/hours";
 import { goalsCompleted } from "@/app/actions/goal";
 import { getUser } from "@/app/actions/user";
