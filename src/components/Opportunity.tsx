@@ -169,18 +169,11 @@ export default function Opportunity({
                 </div>
               </div>
               <DialogFooter className="flex w-full justify-end">
-                <div className="grid grid-cols-2 max-w-fit gap-4">
-                  <DialogClose asChild>
-                    <Button variant="outline" className="hover:cursor-pointer">
-                      Close <X />
-                    </Button>
-                  </DialogClose>
-                  <ClaimButton
-                    id={_id}
-                    status={status}
-                    onStatusChange={setStatus}
-                  />
-                </div>
+                <DialogClose asChild>
+                  <Button variant="outline" className="hover:cursor-pointer">
+                    Close <X />
+                  </Button>
+                </DialogClose>
               </DialogFooter>
             </DialogContent>
           </Dialog>

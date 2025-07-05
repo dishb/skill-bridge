@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 import {
   ColumnDef,
   flexRender,
@@ -17,11 +18,13 @@ import {
 import { useState, useEffect } from "react";
 import { getLeaders, initializeHours } from "@/app/actions/hours";
 import { Crown } from "lucide-react";
+import type { ObjectId } from "mongodb";
 
 interface Column {
   position: number;
   userName: string;
   totalHours: number;
+  userId: ObjectId;
 }
 
 const columns: ColumnDef<Column>[] = [
@@ -57,6 +60,13 @@ const columns: ColumnDef<Column>[] = [
   {
     accessorKey: "userName",
     header: "Name",
+    cell: ({ row }) => {
+      return (
+        <Link href={`/profile/${row.original.userId.toString()}`} className="hover:underline">
+          {row.original.userName}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "totalHours",
@@ -84,6 +94,7 @@ export default function GoalHistory() {
           position: index + 1,
           userName: leader.userName,
           totalHours: leader.totalHours,
+          userId: leader.userId,
         }));
         setData(leadersWithPosition);
       }
@@ -112,7 +123,7 @@ export default function GoalHistory() {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );

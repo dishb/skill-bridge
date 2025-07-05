@@ -9,6 +9,8 @@ export default function Navbar() {
   let pageTitle = [""];
   if (pathname.toLowerCase().includes("volunteer")) {
     pageTitle = ["Volunteer"];
+  } else if (pathname.toLowerCase().includes("profile")) {
+    pageTitle = ["Profile"];
   } else {
     pageTitle = pathname
       .split("/")

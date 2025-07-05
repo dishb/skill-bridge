@@ -7,13 +7,10 @@ import {
   CardFooter,
   CardContent,
 } from "@/components/ui/card";
+import DynamicPageProps from "@/types/dynamicPageProps";
 import { toast } from "sonner";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Page({ params }: DynamicPageProps) {
   const { id } = await params;
   const res = await getOpportunity(id);
   if (!res.ok) {

@@ -11,8 +11,9 @@ import { Progress } from "./ui/progress";
 import { useState, useEffect } from "react";
 import type Goal from "@/types/goal";
 import { getHoursTowardsGoal } from "@/app/actions/hours";
+import ProgressBarProps from "@/types/progressBarProps";
 
-export default function ProgressBar() {
+export default function ProgressBar({ profilePage }: ProgressBarProps) {
   const [goalHours, setGoalHours] = useState(0);
   const [totalHours, setTotalHours] = useState(0);
 
@@ -30,20 +31,23 @@ export default function ProgressBar() {
   }, []);
 
   return (
-    <Card className="col-span-2">
-      <CardHeader>
-        <CardTitle className="text-3xl">Goal progress</CardTitle>
-        <CardDescription className="text-xl">
-          Find volunteer opportunities and complete volunteer opportunities to
-          gain hours towards your goal.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Progress
-          value={(totalHours / goalHours) * 100}
-          className="h-5"
-        ></Progress>
-      </CardContent>
-    </Card>
+    <>
+      {profilePage !== undefined && profilePage === true ? (
+        <Progress value={(totalHours / goalHours) * 100} className="h-5" />
+      ) : (
+        <Card className="col-span-2">
+          <CardHeader>
+            <CardTitle className="text-3xl">Goal progress</CardTitle>
+            <CardDescription className="text-xl">
+              Find volunteer opportunities and complete volunteer opportunities
+              to gain hours towards your goal.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Progress value={(totalHours / goalHours) * 100} className="h-5" />
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 }

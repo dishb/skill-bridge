@@ -25,53 +25,55 @@ import {
 import AccountInfo from "./AccountInfo";
 import type SidebarItem from "@/types/sidebarItem";
 import Link from "next/link";
-import { signOut } from "@/auth";
+import { signOut, auth } from "@/auth";
 
-const platformItems: SidebarItem[] = [
-  {
-    title: "Home",
-    url: "/home",
-    icon: Home,
-  },
-  {
-    title: "Impact",
-    url: "/impact",
-    icon: HeartHandshake,
-  },
-  {
-    title: "Goals",
-    url: "/goals",
-    icon: Goal,
-  },
-];
-
-const socialItems: SidebarItem[] = [
-  {
-    title: "Discover",
-    url: "/discover",
-    icon: Compass,
-  },
-  {
-    title: "Leaderboard",
-    url: "/leaderboard",
-    icon: Crown,
-  },
-];
-
-const accountItems: SidebarItem[] = [
-  {
-    title: "Profile",
-    url: "/profile",
-    icon: UserRound,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Bolt,
-  },
-];
-
-export default function AppSidebar() {
+export default async function AppSidebar() {
+  const session = await auth();
+  
+  const platformItems: SidebarItem[] = [
+    {
+      title: "Home",
+      url: "/home",
+      icon: Home,
+    },
+    {
+      title: "Impact",
+      url: "/impact",
+      icon: HeartHandshake,
+    },
+    {
+      title: "Goals",
+      url: "/goals",
+      icon: Goal,
+    },
+  ];
+  
+  const socialItems: SidebarItem[] = [
+    {
+      title: "Discover",
+      url: "/discover",
+      icon: Compass,
+    },
+    {
+      title: "Leaderboard",
+      url: "/leaderboard",
+      icon: Crown,
+    },
+  ];
+  
+  const accountItems: SidebarItem[] = [
+    {
+      title: "Profile",
+      url: `/profile/${session?.user?.id}`,
+      icon: UserRound,
+    },
+    {
+      title: "Settings",
+      url: "/settings",
+      icon: Bolt,
+    },
+  ];
+  
   return (
     <Sidebar>
       <SidebarHeader>

@@ -71,3 +71,30 @@ export async function createGoal(hours: number) {
     return { ok: false, error: err.message };
   }
 }
+
+export async function goalsCompleted(id?: string) {
+  try {
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      throw new Error("Not authenticated.");
+    }
+
+    let idToSearchBy = session.user.id;
+    if (id) {
+      idToSearchBy = id;
+    }
+
+    const db = client.db("customerdb");
+    const goalCollection = db.collection("goals");
+    const res = await goalCollection
+      .find({
+        userId: new ObjectId(idToSearchBy),
+        status: "completed",
+      })
+      .toArray();
+
+    return { ok: true, goalsCompleted: res.length };
+  } catch (err: any) {
+    return { ok: false, error: err.message };
+  }
+}

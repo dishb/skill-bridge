@@ -37,17 +37,22 @@ export async function initializeHours() {
   }
 }
 
-export async function getTotalHours() {
+export async function getTotalHours(id?: string) {
   try {
     const session = await auth();
     if (!session || !session.user || !session.user.id) {
       throw new Error("Not authenticated.");
     }
+    
+    let idToSearchBy = session.user.id;
+    if (id) {
+      idToSearchBy = id;
+    }
 
     const db = client.db("customerdb");
     const hoursCollection = db.collection("hours");
     const result = (await hoursCollection.findOne({
-      userId: new ObjectId(session.user.id),
+      userId: new ObjectId(idToSearchBy),
     })) as Hours | null;
 
     if (result === null) {
