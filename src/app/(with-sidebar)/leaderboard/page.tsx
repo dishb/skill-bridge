@@ -17,7 +17,7 @@ import {
 } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
 import { getLeaders } from "@/app/actions/hours";
-import { Crown } from "lucide-react";
+import { Crown, ArrowUpRight } from "lucide-react";
 import type { ObjectId } from "mongodb";
 
 interface Column {
@@ -62,8 +62,12 @@ const columns: ColumnDef<Column>[] = [
     header: "Name",
     cell: ({ row }) => {
       return (
-        <Link href={`/profile/${row.original.userId.toString()}`} className="hover:underline">
+        <Link
+          href={`/profile/${row.original.userId.toString()}`}
+          className="flex items-center gap-1 hover:underline"
+        >
           {row.original.userName}
+          <ArrowUpRight className="w-6 h-auto" />
         </Link>
       );
     },

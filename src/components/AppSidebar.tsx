@@ -29,7 +29,7 @@ import { signOut, auth } from "@/auth";
 
 export default async function AppSidebar() {
   const session = await auth();
-  
+
   const platformItems: SidebarItem[] = [
     {
       title: "Home",
@@ -47,7 +47,7 @@ export default async function AppSidebar() {
       icon: Goal,
     },
   ];
-  
+
   const socialItems: SidebarItem[] = [
     {
       title: "Discover",
@@ -60,20 +60,15 @@ export default async function AppSidebar() {
       icon: Crown,
     },
   ];
-  
+
   const accountItems: SidebarItem[] = [
     {
       title: "Profile",
       url: `/profile/${session?.user?.id}`,
       icon: UserRound,
     },
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Bolt,
-    },
   ];
-  
+
   return (
     <Sidebar>
       <SidebarHeader>
