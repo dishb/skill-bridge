@@ -2,7 +2,6 @@ import {
   Home,
   HeartHandshake,
   UserRound,
-  Bolt,
   LogOut,
   Goal,
   Store,
