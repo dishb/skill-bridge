@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { initializeHours } from "@/app/actions/hours";
 
 export default function Page() {
   const [search, setSearch] = useState("");
@@ -18,6 +19,7 @@ export default function Page() {
     }
 
     loadOpportunities();
+    initializeHours();
 
     const interval = setInterval(() => {
       loadOpportunities();
@@ -30,8 +32,8 @@ export default function Page() {
     search.trim() === ""
       ? true
       : item.tags?.some((tag: string) =>
-          tag.toLowerCase().includes(search.toLowerCase())
-        )
+          tag.toLowerCase().includes(search.toLowerCase()),
+        ),
   );
 
   return (

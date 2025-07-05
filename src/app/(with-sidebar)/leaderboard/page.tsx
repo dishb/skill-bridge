@@ -16,7 +16,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
-import { getLeaders, initializeHours } from "@/app/actions/hours";
+import { getLeaders } from "@/app/actions/hours";
 import { Crown } from "lucide-react";
 import type { ObjectId } from "mongodb";
 
@@ -101,7 +101,6 @@ export default function GoalHistory() {
     }
 
     handleFetchLeaders();
-    initializeHours();
 
     const interval = setInterval(() => {
       handleFetchLeaders();

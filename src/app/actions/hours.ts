@@ -43,7 +43,7 @@ export async function getTotalHours(id?: string) {
     if (!session || !session.user || !session.user.id) {
       throw new Error("Not authenticated.");
     }
-    
+
     let idToSearchBy = session.user.id;
     if (id) {
       idToSearchBy = id;
@@ -80,7 +80,7 @@ export async function getHoursTowardsGoal() {
 
     if (result === null) {
       throw new Error(
-        "An error occurred finding your number of hours towards a goal."
+        "An error occurred finding your number of hours towards a goal.",
       );
     }
 
