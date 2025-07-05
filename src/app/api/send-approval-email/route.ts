@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
-  const { documentId } = await req.json();
+  const { _id } = await req.json();
   const website =
     process.env.NODE_ENV === "production"
       ? "https://skill-bridge-phi.vercel.app/"
       : "http://localhost:3000";
-  const magicLink = `${website}/approve-hours/${documentId}`;
+  const magicLink = `${website}/approve-hours/${_id}`;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",

@@ -44,7 +44,7 @@ export default function HoursCounter() {
           <p
             className={`text-7xl font-bold ${totalHours === 0 ? "text-red-500" : "text-green-500"}`}
           >
-            {totalHours}
+            {totalHours.toFixed(1)}
           </p>
           <p className="uppercase text-muted-foreground">
             {totalHours === 1 ? "Hour" : "Hours"}

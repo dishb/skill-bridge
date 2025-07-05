@@ -63,7 +63,7 @@ export default function Opportunity({
 
   async function onClick() {
     try {
-      toast.message("Sending approval request.", {
+      toast.info("Sending approval request.", {
         description: "Please wait while we send the email.",
       });
 
@@ -81,7 +81,8 @@ export default function Opportunity({
         });
       } else {
         throw new Error(
-          "An error occurred sending the volunteer hours approval request email."
+          resJson.error ||
+            "An error occurred sending the volunteer hours approval request email.",
         );
       }
     } catch (err: any) {
