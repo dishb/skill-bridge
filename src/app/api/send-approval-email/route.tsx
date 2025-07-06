@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { render } from "@react-email/components";
+import ApprovalEmail from "@/components/ApprovalEmail";
+import { getOpportunity } from "@/app/actions/opportunity";
 
 export async function POST(req: Request) {
   const { _id } = await req.json();
+
   const website =
     process.env.NODE_ENV === "production"
       ? "https://skill-bridge-phi.vercel.app/"
       : "http://localhost:3000";
   const magicLink = `${website}/approve-hours/${_id}`;
-
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -16,11 +19,18 @@ export async function POST(req: Request) {
       pass: process.env.GMAIL_APP_PASSWORD,
     },
   });
+
+  const res = await getOpportunity(_id);
+  const opportunity = res.opportunity;
+  const emailHtml = await render(
+    <ApprovalEmail magicLink={magicLink} opportunity={opportunity} />,
+  );
+
   const mailOptions = {
-    from: `"Skill Bridge" <${process.env.GMAIL_USER}>`,
+    from: '"Skill Bridge" <volunteer@skillbridge.com>',
     to: process.env.RECIPIENT_EMAIL,
     subject: "Approve volunteer hours",
-    html: `<a href="${magicLink}">Approve volunteer hours</a>`,
+    html: emailHtml,
   };
 
   try {

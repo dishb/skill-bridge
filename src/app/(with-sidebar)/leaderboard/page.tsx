@@ -82,7 +82,7 @@ const columns: ColumnDef<Leader>[] = [
 ];
 
 export default function GoalHistory() {
-  const [data, setData] = useState<Column[]>([]);
+  const [data, setData] = useState<Leader[]>([]);
 
   const table = useReactTable({
     data,
