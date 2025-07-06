@@ -25,16 +25,9 @@ import {
 import { useState, useEffect } from "react";
 import { getLeaders } from "@/app/actions/hours";
 import { Crown, ArrowUpRight } from "lucide-react";
-import type { ObjectId } from "mongodb";
+import type Leader from "@/types/leader";
 
-interface Column {
-  position: number;
-  userName: string;
-  totalHours: number;
-  userId: ObjectId;
-}
-
-const columns: ColumnDef<Column>[] = [
+const columns: ColumnDef<Leader>[] = [
   {
     accessorKey: "position",
     header: "Position",
