@@ -132,7 +132,7 @@ export default function Opportunity({
                 Learn more <ArrowUpRight />
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent showCloseButton={false}>
               <DialogHeader>
                 <DialogTitle>{title}</DialogTitle>
                 <DialogDescription>

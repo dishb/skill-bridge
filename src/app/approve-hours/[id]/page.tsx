@@ -9,7 +9,8 @@ export default async function Page({
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <form action={`/api/approve/${id}`} method="POST">
+      <iframe name="apiRes" className="hidden" />
+      <form action={`/api/approve/${id}`} method="POST" target="apiRes">
         <Button type="submit" className="hover:cursor-pointer">
           Approve volunteer hours
         </Button>
