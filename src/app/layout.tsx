@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/ThemeProvider";
+import { Toaster } from "sonner";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default async function RootLayout({
         >
           <main>{children}</main>
         </ThemeProvider>
+        <Toaster richColors closeButton />
       </body>
     </html>
   );

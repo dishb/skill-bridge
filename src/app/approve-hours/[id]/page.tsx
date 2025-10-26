@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import ApproveForm from "@/components/ApproveForm";
 
 export default async function Page({
   params,
@@ -9,12 +9,7 @@ export default async function Page({
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <iframe name="apiRes" className="hidden" />
-      <form action={`/api/approve/${id}`} method="POST" target="apiRes">
-        <Button type="submit" className="hover:cursor-pointer">
-          Approve volunteer hours
-        </Button>
-      </form>
+      <ApproveForm id={id} />
     </div>
   );
 }
