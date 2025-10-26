@@ -5,20 +5,6 @@ import client from "./db";
 const opportunities = [
   {
     status: "not-started",
-    title: "Create a Personalized Video Message for a Veteran",
-    description:
-      "Record a short video message to thank a veteran for their service.",
-    longDescription:
-      "Veterans appreciate hearing from people who care. Your video message can express gratitude and support for their sacrifices. Be sincere and speak from the heart.",
-    dueDate: new Date("2025-10-27T10:30:00Z"),
-    createdBy: "Dishant Bhandula",
-    isOnline: true,
-    estimatedTime: 60,
-    contactEmail: "code.dishb@gmail.com",
-    tags: ["writing", "creative", "veterans", "elderly", "remote"],
-  },
-  {
-    status: "not-started",
     title: "Write a Birthday Poem for a Veteran",
     description:
       "Create a short birthday poem for Mr. Charles, a 92-year-old WWII veteran in hospice care.",
